@@ -2,7 +2,7 @@
 bin/
 lib/
 obj/
-vscode/
+.vscode/
 
 # Files
 
