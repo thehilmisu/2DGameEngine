@@ -3,8 +3,11 @@
 #include "../Graphics/TextureManager.h"
 #include "../Physics/Transform.h"
 
+#include "../Characters/Warrior.h"
+
 
 Engine* Engine::s_Instance = nullptr;
+Warrior* player = nullptr; 
 
 bool Engine::Init()
 {
@@ -32,14 +35,14 @@ bool Engine::Init()
         return false;
     }
 
-    TextureManager::GetInstance()->Load("tree", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/tree.png");
-
-
+    TextureManager::GetInstance()->Load("player", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/knight_idle.png");
+    player = new Warrior(new Properties("player", 100, 200, 42 ,42));
     return m_IsRunning = true;
 }
 
 bool Engine::Clean()
 {
+    //player->Clean();
     TextureManager::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
@@ -56,7 +59,7 @@ void Engine::Quit()
 
 void Engine::Update()
 {
-    //CORE_INFO("Updating...");
+    player->Update(0);
 }
 
 void Engine::Render()
@@ -64,7 +67,7 @@ void Engine::Render()
     SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
     SDL_RenderClear(m_Renderer);
 
-    TextureManager::GetInstance()->Draw("tree", 10, 10, 418, 1024);
+    player->Draw();
 
     SDL_RenderPresent(m_Renderer);
 }
