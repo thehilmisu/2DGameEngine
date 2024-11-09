@@ -20,7 +20,7 @@ void Warrior::Draw()
 
 void Warrior::Update(float deltatime)
 {
-    m_Animation->SetProps("player_idle", 0, 4, 120, SDL_FLIP_NONE);
+    m_Animation->SetProps("player_idle", 0, 4, 100, SDL_FLIP_NONE);
     m_RigidBody->UnSetForce();
 
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_RIGHT))
