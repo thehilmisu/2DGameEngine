@@ -4,6 +4,7 @@
 #include "../Physics/Transform.h"
 #include "../Inputs/Input.h"
 #include "../Characters/Warrior.h"
+#include "../Timer/Timer.h"
 
 
 Engine* Engine::s_Instance = nullptr;
@@ -35,8 +36,10 @@ bool Engine::Init()
         return false;
     }
 
-    TextureManager::GetInstance()->Load("player", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/knight_idle.png");
-    player = new Warrior(new Properties("player", 100, 200, 42 ,42));
+    TextureManager::GetInstance()->Load("player_idle", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/knight_idle.png");
+    TextureManager::GetInstance()->Load("player_walk", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/knight_walk.png");
+
+    player = new Warrior(new Properties("player_idle", 100, 200, 42 ,42));
     return m_IsRunning = true;
 }
 
@@ -59,12 +62,8 @@ void Engine::Quit()
 
 void Engine::Update()
 {
-    //testing purposes
-    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A)){
-        CORE_TRACE("Key A is pushed");
-    }
-
-    player->Update(0);
+    float dt = Timer::GetInstance()->GetDeltaTime();
+    player->Update(dt);
 }
 
 void Engine::Render()

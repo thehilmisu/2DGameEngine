@@ -5,6 +5,8 @@
 #include "../Animation/Animation.h"
 #include "../Physics/RigidBody.h"
 
+#define WARRIOR_SPEED   5.0f
+
 class Warrior : public Character
 {
     public:
