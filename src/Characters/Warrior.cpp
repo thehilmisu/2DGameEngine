@@ -5,6 +5,9 @@
 
 Warrior::Warrior(Properties* props) : Character(props)
 {
+
+    m_RigidBody = new RigidBody();
+
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, 0, 4, 120, SDL_FLIP_NONE);
 }
@@ -16,6 +19,10 @@ void Warrior::Draw()
 
 void Warrior::Update(float deltatime)
 {
+    m_RigidBody->Update(0.2);
+    m_Transform->TranslateX(m_RigidBody->GetPosition().X);
+    m_Transform->TranslateY(m_RigidBody->GetPosition().Y);
+
     m_Animation->Update();
 }
 
