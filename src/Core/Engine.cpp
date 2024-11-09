@@ -2,7 +2,7 @@
 #include "Log.h"
 #include "../Graphics/TextureManager.h"
 #include "../Physics/Transform.h"
-
+#include "../Inputs/Input.h"
 #include "../Characters/Warrior.h"
 
 
@@ -59,6 +59,11 @@ void Engine::Quit()
 
 void Engine::Update()
 {
+    //testing purposes
+    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_A)){
+        CORE_TRACE("Key A is pushed");
+    }
+
     player->Update(0);
 }
 
@@ -74,18 +79,5 @@ void Engine::Render()
 
 void Engine::Events()
 {
-    SDL_Event event;
-    SDL_PollEvent(&event);
-    
-    switch (event.type)
-    {
-        case SDL_QUIT:
-            Quit();
-            break;
-        
-        default:
-            break;
-    }
-
-
+    Input::GetInstance()->Listen();
 }
