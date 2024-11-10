@@ -1,7 +1,10 @@
+SDPLOG_INCLUDE = thirdparty/spdlog/include
+TINYXML_INCLUDE = thirdparty/tinyxml
+
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Iinclude -Ithirdparty/spdlog/include `sdl2-config --cflags`
-LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+CXXFLAGS = -std=c++17 -Wall -Iinclude -I$(SDPLOG_INCLUDE) -I$(TINYXML_INCLUDE) `sdl2-config --cflags`
+LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf -ltinyxml
 
 # Directories
 SRC_DIR = src

@@ -20,7 +20,7 @@ void Warrior::Draw()
 
 void Warrior::Update(float deltatime)
 {
-    m_Animation->SetProps("player_idle", 0, 4, 100, SDL_FLIP_NONE);
+    m_Animation->SetProps("player_idle", 0, 5, 100, SDL_FLIP_NONE);
     m_RigidBody->UnSetForce();
 
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_RIGHT))
@@ -32,6 +32,11 @@ void Warrior::Update(float deltatime)
     {
         m_RigidBody->ApplyForceX(WARRIOR_SPEED * BACKWARD);
         m_Animation->SetProps("player_walk", 0, 8, 100, SDL_FLIP_HORIZONTAL);
+    }
+    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE))
+    {
+        //m_RigidBody->ApplyForceX(WARRIOR_SPEED * BACKWARD);
+        m_Animation->SetProps("player_attack", 0, 5, 100, SDL_FLIP_NONE);
     }
 
     m_RigidBody->Update(deltatime);

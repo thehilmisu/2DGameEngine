@@ -5,6 +5,7 @@
 #include "../Inputs/Input.h"
 #include "../Characters/Warrior.h"
 #include "../Timer/Timer.h"
+#include "../Map/MapParser.h"
 
 
 Engine* Engine::s_Instance = nullptr;
@@ -36,16 +37,25 @@ bool Engine::Init()
         return false;
     }
 
-    TextureManager::GetInstance()->Load("player_idle", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/knight_idle.png");
-    TextureManager::GetInstance()->Load("player_walk", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/knight_walk.png");
+    if(MapParser::GetInstance()->Load())
+    {
+        CORE_ERROR("Failed to load the map");
+    }
 
-    player = new Warrior(new Properties("player_idle", 100, 200, 42 ,42));
+    m_LevelMap = MapParser::GetInstance()->GetMap("map");
+
+    TextureManager::GetInstance()->Load("player_idle", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/idle.png");
+    TextureManager::GetInstance()->Load("player_walk", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/run.png");
+    TextureManager::GetInstance()->Load("player_attack", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/attack.png");
+    TextureManager::GetInstance()->Load("player_hurt", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/hurt.png");
+
+    player = new Warrior(new Properties("player_idle", 100, 200, 96 ,96));
+
     return m_IsRunning = true;
 }
 
 bool Engine::Clean()
 {
-    //player->Clean();
     TextureManager::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
@@ -63,6 +73,7 @@ void Engine::Quit()
 void Engine::Update()
 {
     float dt = Timer::GetInstance()->GetDeltaTime();
+    m_LevelMap->Update();
     player->Update(dt);
 }
 
@@ -71,6 +82,7 @@ void Engine::Render()
     SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
     SDL_RenderClear(m_Renderer);
 
+    m_LevelMap->Render();
     player->Draw();
 
     SDL_RenderPresent(m_Renderer);
