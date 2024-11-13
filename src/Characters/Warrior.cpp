@@ -10,7 +10,7 @@ Warrior::Warrior(Properties* props) : Character(props)
     m_RigidBody = new RigidBody();
 
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 0, 8, 120, SDL_FLIP_NONE);
+    m_Animation->SetProps(m_TextureID, 0, 8, 120);
 
 
     TextureManager::GetInstance()->Load("player_idle", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/idle.png");
@@ -26,23 +26,23 @@ void Warrior::Draw()
 
 void Warrior::Update(float deltatime)
 {
-    m_Animation->SetProps("player_idle", 0, 5, 100, SDL_FLIP_NONE);
+    m_Animation->SetProps("player_idle", 0, 5, 100);
     m_RigidBody->UnSetForce();
 
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_RIGHT))
     {
         m_RigidBody->ApplyForceX(WARRIOR_SPEED * FORWARD);
-        m_Animation->SetProps("player_walk", 0, 8, 100, SDL_FLIP_NONE);
+        m_Animation->SetProps("player_walk", 0, 8, 100);
     }
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_LEFT))
     {
         m_RigidBody->ApplyForceX(WARRIOR_SPEED * BACKWARD);
-        m_Animation->SetProps("player_walk", 0, 8, 100, SDL_FLIP_HORIZONTAL);
+        m_Animation->SetProps("player_walk", 0, 8, 100);
     }
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE))
     {
         //m_RigidBody->ApplyForceX(WARRIOR_SPEED * BACKWARD);
-        m_Animation->SetProps("player_attack", 0, 5, 100, SDL_FLIP_NONE);
+        m_Animation->SetProps("player_attack", 0, 5, 100);
     }
 
     m_RigidBody->Update(deltatime);

@@ -12,7 +12,7 @@ Knight::Knight(Properties* props) : Character(props)
     m_RigidBody = new RigidBody();
 
     m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 0, 8, ANIMATION_SPEED, SDL_FLIP_NONE);
+    m_Animation->SetProps(m_TextureID, 0, 8, ANIMATION_SPEED);
 
 }
 
@@ -20,6 +20,14 @@ Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH
 {
     m_JumpTime = JUMP_TIME;
     m_JumpForce = JUMP_FORCE;
+    m_AttackTime = ATTACK_TIME;
+
+    m_IsRunning = false;
+    m_IsJumping =false;
+    m_IsFalling =false;
+    m_IsGrounded =false;
+    m_IsAttacking =false;
+
 
     m_Collider = new Collider();
     m_Collider->SetOffset(0, 0, 0, 0);
@@ -62,13 +70,31 @@ Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH
     for(int i =0; i < 3; i++)
         m_JumpTextureIDs.push_back("HeroKnight_Jump_" + std::to_string(i));
 
+    TextureManager::GetInstance()->Load("HeroKnight_Fall_0", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_0.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Fall_1", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_1.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Fall_2", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_2.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Fall_3", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_3.png");
+
+    for(int i =0; i < 4; i++)
+        m_FallTextureIDs.push_back("HeroKnight_Fall_" + std::to_string(i));
+
+    TextureManager::GetInstance()->Load("HeroKnight_Attack1_0", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_0.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Attack1_1", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_1.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Attack1_2", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_2.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Attack1_3", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_3.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Attack1_4", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_4.png");
+    TextureManager::GetInstance()->Load("HeroKnight_Attack1_5", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_5.png");
+
+    for(int i =0; i < 5; i++)
+        m_Attack1TextureIDs.push_back("HeroKnight_Attack1_" + std::to_string(i));
+
 
 
 }
 
 void Knight::Draw()
 {
-    m_Animation->Draw(m_Transform->X, m_Transform->Y, m_Width, m_Height);
+    m_Animation->Draw(m_Transform->X, m_Transform->Y, m_Width, m_Height, m_Flip);
 
     //TODO: remove here and add it to collider, to see the box collider
     Vector2D cam = Camera::GetInstance()->GetPosition();
@@ -81,28 +107,52 @@ void Knight::Draw()
 
 void Knight::Update(float deltatime)
 {
-
-    m_Animation->SetProps(m_IdleTextureIDs, ANIMATION_SPEED, SDL_FLIP_NONE);
+    m_IsRunning = false;
+    m_Animation->SetProps(m_IdleTextureIDs, ANIMATION_SPEED);
     m_RigidBody->UnSetForce();
 
-    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_RIGHT))
+    /////////////////////MOVEMENT//////////////////////////////////////////////////
+    if(Input::GetInstance()->GetAxisKey(HORIZONTAL) == FORWARD && !m_IsAttacking)
     {
-        m_RigidBody->ApplyForceX(KNIGHT_SPEED * FORWARD);
-        m_Animation->SetProps(m_RunTextureIDs, ANIMATION_SPEED, SDL_FLIP_NONE);
+        m_RigidBody->ApplyForceX(FORWARD * RUN_FORCE);
+        m_Flip = SDL_FLIP_NONE;
+        m_IsRunning = true;
     }
-    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_LEFT))
+
+    if(Input::GetInstance()->GetAxisKey(HORIZONTAL) == BACKWARD && !m_IsAttacking)
     {
-        m_RigidBody->ApplyForceX(KNIGHT_SPEED * BACKWARD);
-        m_Animation->SetProps(m_RunTextureIDs, ANIMATION_SPEED, SDL_FLIP_HORIZONTAL);
+        m_RigidBody->ApplyForceX(BACKWARD * RUN_FORCE);
+        m_Flip = SDL_FLIP_HORIZONTAL;
+        m_IsRunning = true;
     }
-    
+    ///////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////ATTACK////////////////////////////////////////////////////
+    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_RCTRL))
+    {
+        m_RigidBody->UnSetForce();
+        m_IsAttacking = true;
+    }
+
+    if(m_IsAttacking && m_AttackTime > 0)
+    {
+        m_AttackTime -= deltatime;
+    }
+    else
+    {
+        m_IsAttacking = false;
+        m_AttackTime = ATTACK_TIME;
+    }
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////JUMP///////////////////////////////////////////////////////
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE) && m_IsGrounded)
     {
         m_IsJumping = true;
         m_IsGrounded = false;
         m_RigidBody->ApplyForceY(m_JumpForce * UPWARD);
-        m_Animation->SetProps(m_JumpTextureIDs, ANIMATION_SPEED, SDL_FLIP_NONE); 
     }
+    
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_SPACE) && m_IsJumping && m_JumpTime > 0)
     {
         m_JumpTime -= deltatime;
@@ -113,6 +163,15 @@ void Knight::Update(float deltatime)
         m_IsJumping = false;
         m_JumpTime = JUMP_TIME;
     }
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////FALL////////////////////////////////////////////////////////////
+    if(m_RigidBody->GetVelocity().Y > 0 && !m_IsGrounded)
+        m_IsFalling = true;
+    else
+        m_IsFalling = false;
+    ///////////////////////////////////////////////////////////////////////////////
+
 
     // move on x-axis
     m_RigidBody->Update(deltatime);
@@ -143,7 +202,26 @@ void Knight::Update(float deltatime)
     m_origin->x = m_Transform->X + m_Width / 2;
     m_origin->y = m_Transform->Y + m_Height / 2;
 
+    AnimationState();
     m_Animation->Update();
+}
+
+void Knight::AnimationState()
+{
+    m_Animation->SetProps(m_IdleTextureIDs, ANIMATION_SPEED);
+
+    if(m_IsRunning)
+        m_Animation->SetProps(m_RunTextureIDs, ANIMATION_SPEED);
+    
+    if(m_IsJumping)
+        m_Animation->SetProps(m_JumpTextureIDs, ANIMATION_SPEED); 
+    
+    if(m_IsFalling)
+        m_Animation->SetProps(m_FallTextureIDs, ANIMATION_SPEED); 
+    
+    if(m_IsAttacking)
+        m_Animation->SetProps(m_Attack1TextureIDs, ANIMATION_SPEED); 
+
 }
 
 void Knight::Clean()
@@ -163,5 +241,9 @@ void Knight::Clean()
     for(const auto& id : m_Attack1TextureIDs)
         TextureManager::GetInstance()->Drop(id);
     m_Attack1TextureIDs.clear();
+
+    for(const auto& id : m_FallTextureIDs)
+        TextureManager::GetInstance()->Drop(id);
+    m_FallTextureIDs.clear();
 }
 

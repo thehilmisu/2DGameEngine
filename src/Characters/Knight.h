@@ -12,6 +12,8 @@
 #define KNIGHT_SPEED    5.0f
 #define JUMP_TIME       15.0f
 #define JUMP_FORCE      10.0f
+#define RUN_FORCE       4.0f
+#define ATTACK_TIME     20.0f
 
 #define ANIMATION_SPEED 100
 #define WIDTH           100
@@ -28,10 +30,17 @@ class Knight : public Character
         virtual void Clean();
 
     private:
+        void AnimationState();
+
+        float m_IsRunning;
         float m_IsJumping;
+        float m_IsFalling;
         float m_IsGrounded;
+        float m_IsAttacking;
+        
         float m_JumpTime;
         float m_JumpForce;
+        float m_AttackTime;
 
         Collider* m_Collider;
         Animation* m_Animation;
@@ -42,6 +51,7 @@ class Knight : public Character
         std::vector<std::string> m_IdleTextureIDs;
         std::vector<std::string> m_RunTextureIDs;
         std::vector<std::string> m_JumpTextureIDs;
+        std::vector<std::string> m_FallTextureIDs;
         std::vector<std::string> m_Attack1TextureIDs;
 };
 
