@@ -17,6 +17,7 @@ class Warrior : public Character
         virtual void Clean();
 
     private:
+        
         Animation* m_Animation;
         RigidBody* m_RigidBody;
 };

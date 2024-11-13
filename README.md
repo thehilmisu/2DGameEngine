@@ -1,6 +1,6 @@
 # 2D Game Engine
 
-This is a 2D game engine built using C++ and SDL2. The engine supports various features such as animation, character management, input handling, map parsing, and rendering.
+This is a 2D game engine with an example game written in it built using C++ and SDL2. The engine supports various features such as animation, character management, input handling, map parsing, and rendering.
 
 ## Features
 

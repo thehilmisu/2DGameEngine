@@ -4,6 +4,7 @@
 #include "../Physics/Transform.h"
 #include "../Inputs/Input.h"
 #include "../Characters/Warrior.h"
+#include "../Characters/Knight.h"
 #include "../Timer/Timer.h"
 #include "../Map/MapParser.h"
 #include "../Camera/Camera.h"
@@ -11,6 +12,8 @@
 
 Engine* Engine::s_Instance = nullptr;
 Warrior* player = nullptr; 
+Knight* knight = nullptr;
+
 
 bool Engine::Init()
 {
@@ -45,15 +48,13 @@ bool Engine::Init()
 
     m_LevelMap = MapParser::GetInstance()->GetMap("map");
 
-    TextureManager::GetInstance()->Load("player_idle", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/idle.png");
-    TextureManager::GetInstance()->Load("player_walk", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/run.png");
-    TextureManager::GetInstance()->Load("player_attack", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/attack.png");
-    TextureManager::GetInstance()->Load("player_hurt", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/hurt.png");
 
     TextureManager::GetInstance()->Load("background", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/images/x32-complete-background.png");
 
 
     player = new Warrior(new Properties("player_idle", 100, 200, 96 ,96));
+
+    knight = new Knight();
 
     Camera::GetInstance()->SetTarget(player->GetOrigin());
 
@@ -81,6 +82,7 @@ void Engine::Update()
     float dt = Timer::GetInstance()->GetDeltaTime();
     m_LevelMap->Update();
     player->Update(dt);
+    knight->Update(dt);
     Camera::GetInstance()->Update(dt);
 }
 
@@ -93,7 +95,7 @@ void Engine::Render()
 
     m_LevelMap->Render();
     player->Draw();
-
+    knight->Draw();
     SDL_RenderPresent(m_Renderer);
 }
 
