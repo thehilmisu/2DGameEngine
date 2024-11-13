@@ -13,6 +13,10 @@
 #define JUMP_TIME       15.0f
 #define JUMP_FORCE      10.0f
 
+#define ANIMATION_SPEED 100
+#define WIDTH           100
+#define HEIGHT          55
+
 class Knight : public Character
 {
     public:
@@ -32,7 +36,7 @@ class Knight : public Character
         Collider* m_Collider;
         Animation* m_Animation;
         RigidBody* m_RigidBody;
-        
+
         Vector2D m_LastSafePosition;
 
         std::vector<std::string> m_IdleTextureIDs;

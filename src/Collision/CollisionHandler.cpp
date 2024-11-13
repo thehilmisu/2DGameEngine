@@ -6,7 +6,7 @@ CollisionHandler* CollisionHandler::s_Instance = nullptr;
 
 CollisionHandler::CollisionHandler() 
 {
-    m_CollisionLayer = (TileLayer*)Engine::GetInstance()->GetMap()->GetMapLayers().front(); //load the first layer of the tilemap
+    m_CollisionLayer = (TileLayer*)Engine::GetInstance()->GetMap()->GetMapLayers().back(); //load the last layer of the tilemap
     m_CollisionTilemap = m_CollisionLayer->GetTileMap();
 }
 
@@ -33,10 +33,10 @@ bool CollisionHandler::MapCollision(const SDL_Rect& a)
     int bottom_tile = (a.y + a.h) / tileSize;
 
     if(left_tile < 0) left_tile = 0;
-    if(right_tile > colCount) right_tile = colCount;
+    if(right_tile >= colCount) right_tile = colCount - 1;
 
     if(top_tile < 0) top_tile = 0;
-    if(bottom_tile > rowCount) bottom_tile - rowCount;
+    if(bottom_tile >= rowCount) bottom_tile = rowCount - 1;
 
     for(int i = left_tile; i <= right_tile; ++i)
     {

@@ -11,7 +11,6 @@
 
 
 Engine* Engine::s_Instance = nullptr;
-Warrior* player = nullptr; 
 Knight* knight = nullptr;
 
 
@@ -51,18 +50,16 @@ bool Engine::Init()
 
     TextureManager::GetInstance()->Load("background", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/images/x32-complete-background.png");
 
-
-    player = new Warrior(new Properties("player_idle", 100, 200, 96 ,96));
-
     knight = new Knight();
 
-    Camera::GetInstance()->SetTarget(player->GetOrigin());
+    Camera::GetInstance()->SetTarget(knight->GetOrigin());
 
     return m_IsRunning = true;
 }
 
 bool Engine::Clean()
 {
+    knight->Clean();
     TextureManager::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
@@ -81,9 +78,8 @@ void Engine::Update()
 {
     float dt = Timer::GetInstance()->GetDeltaTime();
     m_LevelMap->Update();
-    player->Update(dt);
     knight->Update(dt);
-    Camera::GetInstance()->Update(dt);
+    Camera::GetInstance()->Update(dt);    
 }
 
 void Engine::Render()
@@ -94,8 +90,8 @@ void Engine::Render()
     TextureManager::GetInstance()->Draw("background", 0, 0, 2560, 640);
 
     m_LevelMap->Render();
-    player->Draw();
     knight->Draw();
+
     SDL_RenderPresent(m_Renderer);
 }
 

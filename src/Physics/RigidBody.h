@@ -8,8 +8,8 @@
 
 #define FORWARD     1
 #define BACKWARD    -1
-#define UPWARD      1
-#define DOWNWARD    -1
+#define UPWARD      -1
+#define DOWNWARD    1
 
 class RigidBody
 {
@@ -40,8 +40,8 @@ class RigidBody
         {
             m_Acceleration.X = (m_Force.X + m_Friction.X) / m_Mass;
             m_Acceleration.Y = m_Gravity + m_Force.Y / m_Mass;
-            m_Velocity = m_Acceleration * deltatime;
-            m_Position = m_Velocity * deltatime;
+            m_Velocity = m_Acceleration ;//* deltatime;
+            m_Position = m_Velocity ;//* deltatime;
         }
 
 
