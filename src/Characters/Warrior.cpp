@@ -11,12 +11,6 @@ Warrior::Warrior(Properties* props) : Character(props)
 
     m_Animation = new Animation();
     m_Animation->SetProps(m_TextureID, 0, 8, 120);
-
-
-    TextureManager::GetInstance()->Load("player_idle", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/idle.png");
-    TextureManager::GetInstance()->Load("player_walk", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/run.png");
-    TextureManager::GetInstance()->Load("player_attack", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/attack.png");
-    TextureManager::GetInstance()->Load("player_hurt", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/hurt.png");
 }
 
 void Warrior::Draw()

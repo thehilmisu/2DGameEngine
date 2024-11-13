@@ -2,6 +2,7 @@
 #include "../Core/Engine.h"
 #include "../Core/Log.h"
 #include "../Camera/Camera.h"
+#include "tinyxml.h"
 
 TextureManager* TextureManager::s_Instance = nullptr;
 
@@ -57,6 +58,31 @@ void TextureManager::DrawTile(std::string tilesetID, int tileSize, int x, int y,
     SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), tileSize, tileSize};
 
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[tilesetID], &srcRect, &dstRect, 0, 0, flip);
+}
+
+bool TextureManager::ParseTextures(std::string source)
+{
+    TiXmlDocument xml;
+    xml.LoadFile(source);
+    if(xml.Error())
+    {
+        CORE_ERROR("failed to load file : {0}", source);
+        return false;
+    }
+
+    TiXmlElement* root = xml.RootElement();
+    for(TiXmlElement* e=root->FirstChildElement(); e != nullptr; e = e->NextSiblingElement())
+    {
+        if(e->Value() == std::string("texture"))
+        {
+            std::string id = e->Attribute("id");
+            std::string src = e->Attribute("source");
+
+            Load(id, src);
+        }
+    }
+
+    return true;
 }
 
 

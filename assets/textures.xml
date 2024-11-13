@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<textures>
+    <texture id="background" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/images/x32-complete-background.png" />
+
+    <texture id="player_idle" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/idle.png" />
+    <texture id="player_walk" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/run.png" />
+    <texture id="player_attack" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/attack.png" />
+    <texture id="player_hurt" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/hurt.png" />
+
+    <texture id="HeroKnight_Idle_0" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_0.png" />
+    <texture id="HeroKnight_Idle_1" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_1.png" />
+    <texture id="HeroKnight_Idle_2" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_2.png" />
+    <texture id="HeroKnight_Idle_3" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_3.png" />
+    <texture id="HeroKnight_Idle_4" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_4.png" />
+    <texture id="HeroKnight_Idle_5" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_5.png" />
+    <texture id="HeroKnight_Idle_6" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_6.png" />
+    <texture id="HeroKnight_Idle_7" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_7.png" />
+
+    <texture id="HeroKnight_Run_0" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_0.png" />
+    <texture id="HeroKnight_Run_1" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_1.png" />
+    <texture id="HeroKnight_Run_2" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_2.png" />
+    <texture id="HeroKnight_Run_3" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_3.png" />
+    <texture id="HeroKnight_Run_4" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_4.png" />
+    <texture id="HeroKnight_Run_5" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_5.png" />
+    <texture id="HeroKnight_Run_6" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_6.png" />
+    <texture id="HeroKnight_Run_7" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_7.png" />
+    <texture id="HeroKnight_Run_8" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_8.png" />
+    <texture id="HeroKnight_Run_9" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_9.png" />
+
+    <texture id="HeroKnight_Jump_0" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Jump/HeroKnight_Jump_0.png" />
+    <texture id="HeroKnight_Jump_1" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Jump/HeroKnight_Jump_1.png" />
+    <texture id="HeroKnight_Jump_2" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Jump/HeroKnight_Jump_2.png" />
+
+    <texture id="HeroKnight_Fall_0" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_0.png" />
+    <texture id="HeroKnight_Fall_1" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_1.png" />
+    <texture id="HeroKnight_Fall_2" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_2.png" />
+    <texture id="HeroKnight_Fall_3" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_3.png" />
+
+    <texture id="HeroKnight_Attack1_0" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_0.png" />
+    <texture id="HeroKnight_Attack1_1" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_1.png" />
+    <texture id="HeroKnight_Attack1_2" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_2.png" />
+    <texture id="HeroKnight_Attack1_3" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_3.png" />
+    <texture id="HeroKnight_Attack1_4" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_4.png" />
+    <texture id="HeroKnight_Attack1_5" source="/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_5.png" />
+
+
+</textures>

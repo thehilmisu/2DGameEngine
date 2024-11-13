@@ -37,57 +37,26 @@ Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH
 
     m_Animation = new Animation();
 
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_0", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_0.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_1", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_1.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_2", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_2.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_3", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_3.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_4", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_4.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_5", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_5.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_6", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_6.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Idle_7", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Idle/HeroKnight_Idle_7.png");
-
-    for(int i =0; i < 8; i++)
+    // TODO: get those frame counts from xml 
+    const int idle_frame_count =8;
+    for(int i =0; i < idle_frame_count; i++)
         m_IdleTextureIDs.push_back("HeroKnight_Idle_" + std::to_string(i));
 
-    TextureManager::GetInstance()->Load("HeroKnight_Run_0", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_0.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_1", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_1.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_2", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_2.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_3", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_3.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_4", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_4.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_5", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_5.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_6", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_6.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_7", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_7.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_8", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_8.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Run_9", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Run/HeroKnight_Run_9.png");
-
-    for(int i =0; i < 10; i++)
+    const int running_frame_count = 10;
+    for(int i =0; i < running_frame_count; i++)
         m_RunTextureIDs.push_back("HeroKnight_Run_" + std::to_string(i));
 
-    TextureManager::GetInstance()->Load("HeroKnight_Jump_0", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Jump/HeroKnight_Jump_0.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Jump_1", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Jump/HeroKnight_Jump_1.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Jump_2", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Jump/HeroKnight_Jump_2.png");
-
-    for(int i =0; i < 3; i++)
+    const int jumping_frame_count = 3;
+    for(int i =0; i < jumping_frame_count; i++)
         m_JumpTextureIDs.push_back("HeroKnight_Jump_" + std::to_string(i));
 
-    TextureManager::GetInstance()->Load("HeroKnight_Fall_0", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_0.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Fall_1", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_1.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Fall_2", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_2.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Fall_3", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Fall/HeroKnight_Fall_3.png");
-
-    for(int i =0; i < 4; i++)
+    const int fall_frame_count = 4;
+    for(int i =0; i < fall_frame_count; i++)
         m_FallTextureIDs.push_back("HeroKnight_Fall_" + std::to_string(i));
-
-    TextureManager::GetInstance()->Load("HeroKnight_Attack1_0", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_0.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Attack1_1", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_1.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Attack1_2", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_2.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Attack1_3", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_3.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Attack1_4", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_4.png");
-    TextureManager::GetInstance()->Load("HeroKnight_Attack1_5", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/HeroKnight/Attack1/HeroKnight_Attack1_5.png");
-
-    for(int i =0; i < 5; i++)
+   
+    const int attack1_frame_count = 5;
+    for(int i =0; i < attack1_frame_count; i++)
         m_Attack1TextureIDs.push_back("HeroKnight_Attack1_" + std::to_string(i));
-
 
 
 }

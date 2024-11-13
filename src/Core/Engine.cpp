@@ -48,7 +48,7 @@ bool Engine::Init()
     m_LevelMap = MapParser::GetInstance()->GetMap("map");
 
 
-    TextureManager::GetInstance()->Load("background", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/images/x32-complete-background.png");
+    TextureManager::GetInstance()->ParseTextures("/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/textures.xml");
 
     knight = new Knight();
 
