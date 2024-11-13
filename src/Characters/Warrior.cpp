@@ -43,6 +43,10 @@ void Warrior::Update(float deltatime)
     m_Transform->TranslateX(m_RigidBody->GetPosition().X);
     //m_Transform->TranslateY(m_RigidBody->GetPosition().Y);
 
+    //update the current value of origin
+    m_origin->x = m_Transform->X + m_Width / 2;
+    m_origin->y = m_Transform->Y + m_Height / 2;
+
     m_Animation->Update();
 }
 

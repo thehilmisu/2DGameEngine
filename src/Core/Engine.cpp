@@ -6,6 +6,7 @@
 #include "../Characters/Warrior.h"
 #include "../Timer/Timer.h"
 #include "../Map/MapParser.h"
+#include "../Camera/Camera.h"
 
 
 Engine* Engine::s_Instance = nullptr;
@@ -37,7 +38,7 @@ bool Engine::Init()
         return false;
     }
 
-    if(MapParser::GetInstance()->Load())
+    if(!MapParser::GetInstance()->Load())
     {
         CORE_ERROR("Failed to load the map");
     }
@@ -49,7 +50,12 @@ bool Engine::Init()
     TextureManager::GetInstance()->Load("player_attack", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/attack.png");
     TextureManager::GetInstance()->Load("player_hurt", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/samurai/hurt.png");
 
+    TextureManager::GetInstance()->Load("background", "/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/images/x32-complete-background.png");
+
+
     player = new Warrior(new Properties("player_idle", 100, 200, 96 ,96));
+
+    Camera::GetInstance()->SetTarget(player->GetOrigin());
 
     return m_IsRunning = true;
 }
@@ -75,12 +81,15 @@ void Engine::Update()
     float dt = Timer::GetInstance()->GetDeltaTime();
     m_LevelMap->Update();
     player->Update(dt);
+    Camera::GetInstance()->Update(dt);
 }
 
 void Engine::Render()
 {
     SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
     SDL_RenderClear(m_Renderer);
+
+    TextureManager::GetInstance()->Draw("background", 0, 0, 2560, 640);
 
     m_LevelMap->Render();
     player->Draw();
