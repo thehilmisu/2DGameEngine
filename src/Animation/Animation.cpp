@@ -7,7 +7,7 @@ void Animation::Draw(float x, float y, int spriteWidth, int spriteHeight, SDL_Re
 {
     if (m_UseMultipleImages)
     {
-        TextureManager::GetInstance()->Draw(m_TextureIDs[m_SpriteFrame], x, y, spriteWidth, spriteHeight, flip);
+        TextureManager::GetInstance()->DrawMultiple(m_TextureIDs[m_SpriteFrame], x, y, spriteWidth, spriteHeight, flip);
     }
     else
     {

@@ -3,7 +3,6 @@
 #include "../Graphics/TextureManager.h"
 #include "../Physics/Transform.h"
 #include "../Inputs/Input.h"
-#include "../Characters/Warrior.h"
 #include "../Characters/Knight.h"
 #include "../Timer/Timer.h"
 #include "../Map/MapParser.h"
@@ -48,7 +47,7 @@ bool Engine::Init()
     m_LevelMap = MapParser::GetInstance()->GetMap("map");
 
 
-    TextureManager::GetInstance()->ParseTextures("/home/thehilmisu/Desktop/Workdir/2DGameEngine/assets/textures.xml");
+    TextureManager::GetInstance()->ParseTextures("assets/textures.xml");
 
     knight = new Knight();
 

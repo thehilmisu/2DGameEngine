@@ -19,9 +19,9 @@ class Vector2D
             return Vector2D(X - v2.X, Y - v2.Y);
         }
 
-        //override * operator 
-        inline Vector2D operator*(const float scaler) const{
-            return Vector2D(X * scaler, Y * scaler);
+        //override * operator.
+        inline Vector2D operator*(const float& scalar) const{
+            return Vector2D(X * scalar, Y * scalar);
         }
 
 };
