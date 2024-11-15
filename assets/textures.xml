@@ -51,6 +51,9 @@
     <texture id="Enemy_Hurt" source="assets/Skeleton/hurt.png" />
     <texture id="Enemy_Idle" source="assets/Skeleton/idle.png" />
     <texture id="Enemy_Walk" source="assets/Skeleton/walk.png" />
+
+    <!-- flying dragon -->
+    <texture id="FlyingDragon" source="assets/Dragon/FlyingDragon.png" />
     
 
 

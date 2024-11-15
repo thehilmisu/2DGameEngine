@@ -48,4 +48,13 @@
         <frame textureID="HeroKnight_Attack1_5" />
     </sequence>
 
+    <sequence id="Enemy_Idle" frameCount="3" speed="100" width="100" height="55">
+        <frame textureID="HeroKnight_Attack1_0" />
+        <frame textureID="HeroKnight_Attack1_1" />
+        <frame textureID="HeroKnight_Attack1_2" />
+        <frame textureID="HeroKnight_Attack1_3" />
+        <frame textureID="HeroKnight_Attack1_4" />
+        <frame textureID="HeroKnight_Attack1_5" />
+    </sequence>
+
 </textures>
