@@ -1,6 +1,6 @@
 #include "CollisionHandler.h"
 #include "../Core/Engine.h"
-
+#include "../Core/Log.h"
 
 CollisionHandler* CollisionHandler::s_Instance = nullptr;
 
@@ -20,7 +20,8 @@ bool CollisionHandler::CheckCollision(SDL_Rect a, SDL_Rect b)
 
 bool CollisionHandler::MapCollision(const SDL_Rect& a) 
 {
-    //coming from the generated tilemap from the application called tiled 
+    //coming from the generated tilemap from the application called tiled
+    
     int tileSize = 32;
     int rowCount = 20; 
     int colCount = 60;

@@ -1,9 +1,11 @@
 #include "Knight.h"
 #include "SDL2/SDL.h"
+#include <filesystem>
 #include "../Graphics/TextureManager.h"
 #include "../Inputs/Input.h"
 #include "../Camera/Camera.h"
 #include "../Collision/CollisionHandler.h"
+#include "../Core/Log.h"
 
 
 Knight::Knight(Properties* props) : Character(props)
@@ -11,12 +13,11 @@ Knight::Knight(Properties* props) : Character(props)
 
     m_RigidBody = new RigidBody();
 
-    m_Animation = new Animation();
-    m_Animation->SetProps(m_TextureID, 0, 8, ANIMATION_SPEED);
+    m_Animation = new SequenceAnimation();
 
 }
 
-Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH, HEIGHT))
+Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH, HEIGHT, SDL_FLIP_NONE))
 {
     m_JumpTime = JUMP_TIME;
     m_JumpForce = JUMP_FORCE;
@@ -30,40 +31,21 @@ Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH
 
 
     m_Collider = new Collider();
-    m_Collider->SetOffset(0, 0, 0, 0);
+    m_Collider->SetOffset(-40, -10, 80, 15);
 
     m_RigidBody = new RigidBody();
     m_RigidBody->SetGravity(3.0f);
 
-    m_Animation = new Animation();
-
-    // TODO: get those frame counts from xml 
-    const int idle_frame_count =8;
-    for(int i =0; i < idle_frame_count; i++)
-        m_IdleTextureIDs.push_back("HeroKnight_Idle_" + std::to_string(i));
-
-    const int running_frame_count = 10;
-    for(int i =0; i < running_frame_count; i++)
-        m_RunTextureIDs.push_back("HeroKnight_Run_" + std::to_string(i));
-
-    const int jumping_frame_count = 3;
-    for(int i =0; i < jumping_frame_count; i++)
-        m_JumpTextureIDs.push_back("HeroKnight_Jump_" + std::to_string(i));
-
-    const int fall_frame_count = 4;
-    for(int i =0; i < fall_frame_count; i++)
-        m_FallTextureIDs.push_back("HeroKnight_Fall_" + std::to_string(i));
-   
-    const int attack1_frame_count = 5;
-    for(int i =0; i < attack1_frame_count; i++)
-        m_Attack1TextureIDs.push_back("HeroKnight_Attack1_" + std::to_string(i));
-
+    m_Animation = new SequenceAnimation();
+    std::string animationFilePath = std::filesystem::absolute("assets/animation.xml").string();
+    CORE_WARN("Animation file path: {0}", animationFilePath);
+    m_Animation->Parse(animationFilePath);
 
 }
 
 void Knight::Draw()
 {
-    m_Animation->Draw(m_Transform->X, m_Transform->Y, m_Width, m_Height, m_Flip);
+    m_Animation->DrawFrame(m_Transform->X, m_Transform->Y, 1.0f, 1.0f, m_Flip);
 
     //TODO: remove here and add it to collider, to see the box collider
     Vector2D cam = Camera::GetInstance()->GetPosition();
@@ -77,7 +59,7 @@ void Knight::Draw()
 void Knight::Update(float deltatime)
 {
     m_IsRunning = false;
-    m_Animation->SetProps(m_IdleTextureIDs, ANIMATION_SPEED);
+    m_Animation->SetCurrentSequence("HeroKnight_Idle");
     m_RigidBody->UnSetForce();
 
     /////////////////////MOVEMENT//////////////////////////////////////////////////
@@ -134,11 +116,8 @@ void Knight::Update(float deltatime)
     }
     ///////////////////////////////////////////////////////////////////////////////
 
-    ///////////////FALL////////////////////////////////////////////////////////////
-    if(m_RigidBody->GetVelocity().Y > 0 && !m_IsGrounded)
-        m_IsFalling = true;
-    else
-        m_IsFalling = false;
+    ///////////////FALL detection//////////////////////////////////////////////////
+    m_IsFalling = (m_RigidBody->GetVelocity().Y > 0 && !m_IsGrounded);
     ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -172,47 +151,29 @@ void Knight::Update(float deltatime)
     m_origin->y = m_Transform->Y + m_Height / 2;
 
     AnimationState();
-    m_Animation->Update();
+    m_Animation->Update(deltatime);
 }
 
 void Knight::AnimationState()
 {
-    m_Animation->SetProps(m_IdleTextureIDs, ANIMATION_SPEED);
+    m_Animation->SetCurrentSequence("HeroKnight_Idle");
 
     if(m_IsRunning)
-        m_Animation->SetProps(m_RunTextureIDs, ANIMATION_SPEED);
+        m_Animation->SetCurrentSequence("HeroKnight_Run");
     
     if(m_IsJumping)
-        m_Animation->SetProps(m_JumpTextureIDs, ANIMATION_SPEED); 
+        m_Animation->SetCurrentSequence("HeroKnight_Jump");
     
     if(m_IsFalling)
-        m_Animation->SetProps(m_FallTextureIDs, ANIMATION_SPEED); 
+        m_Animation->SetCurrentSequence("HeroKnight_Fall");
     
     if(m_IsAttacking)
-        m_Animation->SetProps(m_Attack1TextureIDs, ANIMATION_SPEED); 
+        m_Animation->SetCurrentSequence("HeroKnight_Attack1");
 
 }
 
 void Knight::Clean()
 {
-    for(const auto& id : m_IdleTextureIDs)
-        TextureManager::GetInstance()->Drop(id);
-    m_IdleTextureIDs.clear();
 
-    for(const auto& id : m_RunTextureIDs)
-        TextureManager::GetInstance()->Drop(id);
-    m_RunTextureIDs.clear();
-
-    for(const auto& id : m_JumpTextureIDs)
-        TextureManager::GetInstance()->Drop(id);
-    m_JumpTextureIDs.clear();
-
-    for(const auto& id : m_Attack1TextureIDs)
-        TextureManager::GetInstance()->Drop(id);
-    m_Attack1TextureIDs.clear();
-
-    for(const auto& id : m_FallTextureIDs)
-        TextureManager::GetInstance()->Drop(id);
-    m_FallTextureIDs.clear();
 }
 

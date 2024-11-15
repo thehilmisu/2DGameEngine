@@ -2,7 +2,7 @@
 #define KNIGHT_H
 
 #include "Character.h"
-#include "../Animation/Animation.h"
+#include "../Animation/SequenceAnimation.h"
 #include "../Physics/RigidBody.h"
 #include "../Physics/Collider.h"
 #include "../Physics/Vector2D.h"
@@ -15,7 +15,6 @@
 #define RUN_FORCE       4.0f
 #define ATTACK_TIME     20.0f
 
-#define ANIMATION_SPEED 100
 #define WIDTH           100
 #define HEIGHT          55
 
@@ -43,16 +42,10 @@ class Knight : public Character
         float m_AttackTime;
 
         Collider* m_Collider;
-        Animation* m_Animation;
+        SequenceAnimation* m_Animation;
         RigidBody* m_RigidBody;
 
         Vector2D m_LastSafePosition;
-
-        std::vector<std::string> m_IdleTextureIDs;
-        std::vector<std::string> m_RunTextureIDs;
-        std::vector<std::string> m_JumpTextureIDs;
-        std::vector<std::string> m_FallTextureIDs;
-        std::vector<std::string> m_Attack1TextureIDs;
 };
 
 #endif

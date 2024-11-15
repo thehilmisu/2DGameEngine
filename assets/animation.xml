@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animations>
+
+    <sequence id="HeroKnight_Idle" frameCount="8" speed="100" width="100" height="55">
+        <frame textureID="HeroKnight_Idle_0" />
+        <frame textureID="HeroKnight_Idle_1" />
+        <frame textureID="HeroKnight_Idle_2" />
+        <frame textureID="HeroKnight_Idle_3" />
+        <frame textureID="HeroKnight_Idle_4" />
+        <frame textureID="HeroKnight_Idle_5" />
+        <frame textureID="HeroKnight_Idle_6" />
+        <frame textureID="HeroKnight_Idle_7" />        
+    </sequence>
+    
+    <sequence id="HeroKnight_Run" frameCount="10" speed="100" width="100" height="55">
+        <frame textureID="HeroKnight_Run_0" />
+        <frame textureID="HeroKnight_Run_1" />
+        <frame textureID="HeroKnight_Run_2" />
+        <frame textureID="HeroKnight_Run_3" />
+        <frame textureID="HeroKnight_Run_4" />
+        <frame textureID="HeroKnight_Run_5" />
+        <frame textureID="HeroKnight_Run_6" />
+        <frame textureID="HeroKnight_Run_7" />        
+        <frame textureID="HeroKnight_Run_8" />
+        <frame textureID="HeroKnight_Run_9" />        
+    </sequence>
+
+    <sequence id="HeroKnight_Jump" frameCount="3" speed="100" width="100" height="55">
+        <frame textureID="HeroKnight_Jump_0" />
+        <frame textureID="HeroKnight_Jump_1" />
+        <frame textureID="HeroKnight_Jump_2" />
+    </sequence>
+
+     <sequence id="HeroKnight_Fall" frameCount="4" speed="100" width="100" height="55">
+        <frame textureID="HeroKnight_Fall_0" />
+        <frame textureID="HeroKnight_Fall_1" />
+        <frame textureID="HeroKnight_Fall_2" />
+        <frame textureID="HeroKnight_Fall_3" />
+    </sequence>
+
+
+     <sequence id="HeroKnight_Attack1" frameCount="3" speed="100" width="100" height="55">
+        <frame textureID="HeroKnight_Attack1_0" />
+        <frame textureID="HeroKnight_Attack1_1" />
+        <frame textureID="HeroKnight_Attack1_2" />
+        <frame textureID="HeroKnight_Attack1_3" />
+        <frame textureID="HeroKnight_Attack1_4" />
+        <frame textureID="HeroKnight_Attack1_5" />
+    </sequence>
+
+</textures>

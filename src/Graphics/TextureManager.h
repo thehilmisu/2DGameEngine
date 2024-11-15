@@ -18,7 +18,7 @@ class TextureManager
         void Drop(std::string id);
         void Clean();
 
-        void Draw(std::string id, int x, int y, int width, int height, float scrollRatio, SDL_RendererFlip flip=SDL_FLIP_NONE);
+        void Draw(std::string id, int x, int y, int width, int height, float scaleX, float scaleY, float scrollRatio, SDL_RendererFlip flip=SDL_FLIP_NONE);
         void DrawMultiple(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip=SDL_FLIP_NONE);
         void DrawTile(std::string tilesetID, int tileSize, int x, int y, int row, int frame, SDL_RendererFlip flip=SDL_FLIP_NONE);
         void DrawFrame(std::string id, int x, int y, int width, int height, 

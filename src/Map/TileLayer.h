@@ -26,6 +26,7 @@ class TileLayer : public Layer
         virtual void Update();
 
         inline TileMap GetTileMap() { return m_TileMap; }
+        inline TilesetList GetTilesets() { return m_Tilesets; }
 
     private:
         int m_TileSize;
