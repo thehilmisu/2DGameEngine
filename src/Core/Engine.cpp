@@ -10,7 +10,7 @@ Engine* Engine::s_Instance = nullptr;
 bool Engine::Init(){
 
     Log::Init();
-    
+
     // initialize SDL and create window
     assert(SDL_Init(SDL_INIT_VIDEO)==0 && SDL_GetError());
     SDL_WindowFlags w_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
@@ -50,6 +50,8 @@ bool Engine::Clean(){
     SDL_DestroyWindow(m_Window);
     IMG_Quit();
     SDL_Quit();
+
+    return true;
 }
 
 void Engine::Quit(){

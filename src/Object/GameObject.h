@@ -49,7 +49,7 @@ class GameObject : public IObject {
             m_Origin = new Point(props->X + props->Width/2, props->Y + props->Height/2);
             delete props;
         }
-
+        virtual ~GameObject()=default;
         virtual void Draw()=0;
         virtual void Clean()=0;
         virtual void Update(float dt)=0;

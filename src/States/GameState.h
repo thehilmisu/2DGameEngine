@@ -6,6 +6,7 @@
 class GameState {
 
     public:
+        virtual ~GameState() = default;
         virtual bool Init() = 0;
         virtual bool Exit() = 0;
 

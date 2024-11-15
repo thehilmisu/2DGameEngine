@@ -42,22 +42,22 @@ bool TextureManager::Add(std::string id, std::string filename){
 
 void TextureManager::Draw(std::string id, int x, int y, int w, int h, SDL_RendererFlip flip, float scaleX, float scaleY, float rotation, float speedRatio){
     SDL_Rect srcRect = {0, 0, w, h};
-    Vector2D cam = Camera::GetInstance()->GetPosition()*speedRatio;
-    SDL_Rect dstRect = {x - cam.X, y - cam.Y, w*scaleX, h*scaleY};
+    Vector2D cam = Camera::GetInstance()->GetPosition() * speedRatio;
+    SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), static_cast<int>(w * scaleX), static_cast<int>(h * scaleY)};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, rotation, nullptr, flip);
 }
 
 void TextureManager::DrawFrame(std::string id, int x, int y, int w, int h, int row, int frame, SDL_RendererFlip flip, float scaleX, float scaleY, float rotation, float speedRatio){
-    SDL_Rect srcRect = {w*frame, h*row, w, h};
-    Vector2D cam = Camera::GetInstance()->GetPosition()*speedRatio;
-    SDL_Rect dstRect = {x - cam.X, y-cam.Y, w*scaleX, h*scaleY};
+    SDL_Rect srcRect = {w * frame, h * row, w, h};
+    Vector2D cam = Camera::GetInstance()->GetPosition() * speedRatio;
+    SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), static_cast<int>(w * scaleX), static_cast<int>(h * scaleY)};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, rotation, nullptr, flip);
 }
 
 void TextureManager::DrawTile(std::string tilesetID, int x, int y, int tilesize, int row, int col, float speedRatio){
-    SDL_Rect srcRect = {tilesize*col, tilesize*row, tilesize, tilesize};
-    Vector2D cam = Camera::GetInstance()->GetPosition()*speedRatio;
-    SDL_Rect dstRect = {x - cam.X, y - cam.Y, tilesize, tilesize};
+    SDL_Rect srcRect = {tilesize * col, tilesize * row, tilesize, tilesize};
+    Vector2D cam = Camera::GetInstance()->GetPosition() * speedRatio;
+    SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), tilesize, tilesize};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[tilesetID], &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
 }
 

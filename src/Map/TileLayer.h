@@ -30,9 +30,11 @@ class TileLayer : public Layer {
         inline TileMap GetTileMap(){return m_Tilemap;}
 
     private:
+        int m_TileSize;
+        int m_Width;
+        int m_Height;
         TileMap m_Tilemap;
         TilesetsList m_Tilesets;
-        int m_TileSize, m_Width, m_Height;
 };
 
 #endif // TILELAYER_H

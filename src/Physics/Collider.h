@@ -26,8 +26,8 @@ class Collider {
         }
 
         void Draw(float speedRatio=1.0){
-            Vector2D cam = Camera::GetInstance()->GetPosition()*speedRatio;
-            SDL_Rect box = {m_Box.x - cam.X, m_Box.y - cam.Y, m_Box.w, m_Box.h};
+            Vector2D cam = Camera::GetInstance()->GetPosition() * speedRatio;
+            SDL_Rect box = {static_cast<int>(m_Box.x - cam.X), static_cast<int>(m_Box.y - cam.Y), m_Box.w, m_Box.h};
             SDL_RenderDrawRect(Engine::GetInstance()->GetRenderer(), &box);
         }
 
