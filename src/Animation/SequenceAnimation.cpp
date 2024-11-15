@@ -10,7 +10,7 @@ SequenceAnimation::SequenceAnimation(bool repeat) : Animation(repeat)
 
 void SequenceAnimation::DrawFrame(float x, float y, float scaleX, float scaleY, SDL_RendererFlip flip) 
 {
-    TextureManager::GetInstance()->Draw(m_CurrentSequence.TextureIDs[m_CurrentFrame], x, y, m_CurrentSequence.Width, m_CurrentSequence.Height, scaleX, scaleY, flip);
+    TextureManager::GetInstance()->DrawMultiple(m_CurrentSequence.TextureIDs[m_CurrentFrame], x, y, m_CurrentSequence.Width, m_CurrentSequence.Height, flip);
 }
 
 void SequenceAnimation::Update(float deltaTime) 

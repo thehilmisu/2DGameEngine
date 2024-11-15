@@ -21,19 +21,8 @@ struct Properties
             TextureID = textureID;
         }
         
-        Properties(std::vector<std::string> textureIDs, float x, float y, int width, int height, SDL_RendererFlip flip = SDL_FLIP_NONE)
-        {
-            X = x;
-            Y = y;
-            Flip = flip;
-            Width = width;
-            Height = height;
-            TextureIDs = textureIDs;
-        }
-
     public:
         std::string TextureID;
-        std::vector<std::string> TextureIDs;
         int Width, Height;
         float X,Y;
         SDL_RendererFlip Flip;
