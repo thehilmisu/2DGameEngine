@@ -3,7 +3,7 @@ TINYXML_INCLUDE = thirdparty/tinyxml
 
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Iinclude -I$(SDPLOG_INCLUDE) -I$(TINYXML_INCLUDE) `sdl2-config --cflags`
+CXXFLAGS = -g -std=c++17 -Wall -Iinclude -I$(SDPLOG_INCLUDE) -I$(TINYXML_INCLUDE) `sdl2-config --cflags`
 LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_mixer -lSDL2_ttf -ltinyxml
 
 # Directories

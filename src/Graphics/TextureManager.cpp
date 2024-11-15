@@ -23,21 +23,22 @@ bool TextureManager::Load(std::string id, std::string  filename)
     }
 
     m_TextureMap[id] = texture;
-    CORE_INFO("texture loaded with id : {0}", id);
+    CORE_INFO("texture loaded with id : {0}, name : {1}", id, filename);
 
     return true;
 }
 
-void TextureManager::Draw(std::string id, int x, int y, int width, int height, 
-                        SDL_RendererFlip flip)
+void TextureManager::Draw(std::string id, int x, int y, int width, int height, float scrollRatio, SDL_RendererFlip flip)
 {
-
+    //CORE_INFO("Draw called with id: {0}, x: {1}, y: {2}, width: {3}, height: {4}, scrollRatio: {5}", id, x, y, width, height, scrollRatio);
 
     SDL_Rect srcRect = {0, 0, width, height};
-    Vector2D cam = Camera::GetInstance()->GetPosition() ;// * scrollRatio;
-    SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), width, height};
-        SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
+    Vector2D cam = (Vector2D){Camera::GetInstance()->GetPosition().X * scrollRatio, Camera::GetInstance()->GetPosition().Y * scrollRatio};
+   
 
+    SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), width, height};
+   
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
 }
 void TextureManager::DrawMultiple(std::string id, int x, int y, int width, int height, 
                         SDL_RendererFlip flip)
@@ -45,7 +46,8 @@ void TextureManager::DrawMultiple(std::string id, int x, int y, int width, int h
     SDL_Rect srcRect = {0, 0, width, height};
     Vector2D cam = Camera::GetInstance()->GetPosition();
     SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), width, height};
-        SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
+    
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, 0, nullptr, flip);
 
 }
 

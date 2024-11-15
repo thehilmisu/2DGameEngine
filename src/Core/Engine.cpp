@@ -86,7 +86,7 @@ void Engine::Render()
     SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
     SDL_RenderClear(m_Renderer);
 
-    TextureManager::GetInstance()->Draw("background", 0, 0, 2560, 640);
+    TextureManager::GetInstance()->Draw("background", 0, 0, 2560, 640, 0.4f, SDL_FLIP_NONE);
 
     m_LevelMap->Render();
     knight->Draw();
