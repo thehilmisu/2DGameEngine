@@ -1,0 +1,27 @@
+#ifndef ENEMY_H
+#define ENEMY_H
+
+#include "Character.h"
+
+#include "../Animation/SequenceAnimation.h"
+#include "../Physics/RigidBody.h"
+#include "../Physics/Collider.h"
+#include "../Physics/Vector2D.h"
+
+class Enemy : public Character 
+{
+public:
+    Enemy(Properties* props);
+    
+    virtual void Draw();
+    virtual void Clean();
+    virtual void Update(float deltatime);
+
+private:
+    Collider* m_Collider;
+    RigidBody* m_RigidBody;
+    SequenceAnimation* m_Animation;
+    Vector2D m_LastSafePosition;
+};
+
+#endif // ENEMY_H
