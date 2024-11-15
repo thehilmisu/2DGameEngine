@@ -4,8 +4,9 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "../Map/GameMap.h"
+#include "../Object/GameObject.h"
 
-#define SCREEN_WIDTH    1080
+#define SCREEN_WIDTH    1280
 #define SCREEN_HEIGHT   720
 
 class Engine
@@ -14,6 +15,7 @@ class Engine
         static Engine* GetInstance(){
             return s_Instance = ( s_Instance != nullptr) ? s_Instance : new Engine();
         }
+        virtual ~Engine() = default;
 
         bool Init();
         bool Clean();
@@ -35,6 +37,8 @@ class Engine
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         static Engine* s_Instance;
+
+        std::vector<GameObject*> m_GameObjects;
     
 };
 

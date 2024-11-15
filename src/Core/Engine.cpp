@@ -7,10 +7,11 @@
 #include "../Timer/Timer.h"
 #include "../Map/MapParser.h"
 #include "../Camera/Camera.h"
-
+#include "../Characters/Enemy.h"
 
 Engine* Engine::s_Instance = nullptr;
 Knight* knight = nullptr;
+Enemy* enemy = nullptr;
 
 bool Engine::Init()
 {
@@ -49,15 +50,58 @@ bool Engine::Init()
     TextureManager::GetInstance()->ParseTextures("assets/textures.xml");
 
     knight = new Knight();
+    enemy = new Enemy(new Properties("Enemy_Idle", 280, 200, 64, 64, SDL_FLIP_HORIZONTAL));
+
+    m_GameObjects.push_back(knight);
+    m_GameObjects.push_back(enemy);
 
     Camera::GetInstance()->SetTarget(knight->GetOrigin());
 
     return m_IsRunning = true;
 }
 
+void Engine::Update()
+{
+    float dt = Timer::GetInstance()->GetDeltaTime();
+    m_LevelMap->Update();
+
+    for(size_t i = 0; i < m_GameObjects.size(); i++)
+    {
+        m_GameObjects[i]->Update(dt);
+    }
+
+    Camera::GetInstance()->Update(dt);    
+}
+
+void Engine::Render()
+{
+    SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
+    SDL_RenderClear(m_Renderer);
+
+    TextureManager::GetInstance()->Draw("background", 0, 0, 2560, 640, 1.0f,1.0f, 0.4f, SDL_FLIP_NONE);
+    m_LevelMap->Render();
+
+    for(size_t i = 0; i < m_GameObjects.size(); i++)
+    {
+        m_GameObjects[i]->Draw();
+    }
+
+    SDL_RenderPresent(m_Renderer);
+}
+
+void Engine::Events()
+{
+    Input::GetInstance()->Listen();
+}
+
+
 bool Engine::Clean()
 {
-    knight->Clean();
+    for(size_t i = 0; i < m_GameObjects.size(); i++)
+    {
+        m_GameObjects[i]->Clean();
+    }
+    
     TextureManager::GetInstance()->Clean();
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
@@ -71,29 +115,3 @@ void Engine::Quit()
 {
     m_IsRunning = false;
 }   
-
-void Engine::Update()
-{
-    float dt = Timer::GetInstance()->GetDeltaTime();
-    m_LevelMap->Update();
-    knight->Update(dt);
-    Camera::GetInstance()->Update(dt);    
-}
-
-void Engine::Render()
-{
-    SDL_SetRenderDrawColor(m_Renderer, 124, 218, 254, 255);
-    SDL_RenderClear(m_Renderer);
-
-    TextureManager::GetInstance()->Draw("background", 0, 0, 2560, 640, 1.0f,1.0f, 0.4f, SDL_FLIP_NONE);
-
-    m_LevelMap->Render();
-    knight->Draw();
-
-    SDL_RenderPresent(m_Renderer);
-}
-
-void Engine::Events()
-{
-    Input::GetInstance()->Listen();
-}

@@ -38,6 +38,7 @@ class GameObject : public IObject
             m_TextureID(props->TextureID), 
             m_Flip(props->Flip),
             m_origin(new Point(props->X + props->Width/2, props->Y + props->Height/2)) {}
+        virtual ~GameObject() = default;
 
 
         inline Point* GetOrigin() { return m_origin; }

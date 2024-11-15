@@ -13,14 +13,6 @@ public:
     void Draw(std::string id, int x, int y, int width, int height, float scaleX=1.0f, float scaleY=1.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void SetProps(std::string textureID, int spriteRow, int frameCount, int speed);
 
-    // int GetCurrentFrame() { return m_CurrentFrame; }
-
-    // int GetCurrentSpriteRow() { return m_SpriteRow; }
-    // void SetSpriteRow(int row) { m_SpriteRow = row; }
-    // void IncrSpriteRow() { m_SpriteRow++; }
-    // void DecrSpriteRow() { m_SpriteRow--; }
-
-
 private:
     int m_Speed;
     int m_SpriteRow;

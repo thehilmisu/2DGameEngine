@@ -3,7 +3,7 @@
 
 #include "Character.h"
 
-#include "../Animation/SequenceAnimation.h"
+#include "../Animation/SpriteAnimation.h"
 #include "../Physics/RigidBody.h"
 #include "../Physics/Collider.h"
 #include "../Physics/Vector2D.h"
@@ -20,7 +20,7 @@ public:
 private:
     Collider* m_Collider;
     RigidBody* m_RigidBody;
-    SequenceAnimation* m_Animation;
+    SpriteAnimation* m_Animation;
     Vector2D m_LastSafePosition;
 };
 

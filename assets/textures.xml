@@ -44,4 +44,14 @@
     <texture id="HeroKnight_Attack1_5" source="assets/HeroKnight/Attack1/HeroKnight_Attack1_5.png" />
 
 
+    <!-- enemy, skeleton -->
+    <texture id="Enemy_Attack_2" source="assets/Skeleton/attack1.png" />
+    <texture id="Enemy_Attack_1" source="assets/Skeleton/attack2.png" />
+    <texture id="Enemy_Death" source="assets/Skeleton/death.png" />
+    <texture id="Enemy_Hurt" source="assets/Skeleton/hurt.png" />
+    <texture id="Enemy_Idle" source="assets/Skeleton/idle.png" />
+    <texture id="Enemy_Walk" source="assets/Skeleton/walk.png" />
+    
+
+
 </textures>

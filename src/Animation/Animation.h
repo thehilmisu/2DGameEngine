@@ -6,6 +6,7 @@ class Animation
 {
     public:
         Animation(bool repeat = true) : m_Repeat(repeat){ m_IsEnded = false; }
+        virtual ~Animation() = default;
         virtual void Update(float deltatime) = 0;
         inline bool IsEnded() { return m_IsEnded; }
 
