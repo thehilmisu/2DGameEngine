@@ -15,10 +15,12 @@ bool Play::Init(){
     int width = collisionLayer->GetWidth()*tilesize;
     int height = collisionLayer->GetHeight()*tilesize;
 
+    CORE_INFO("tilesize: {0}, width: {1}, height: {2}", tilesize, width, height);
+
     Camera::GetInstance()->SetSceneLimit(width, height);
     CollisionHandler::GetInstance()->SetCollisionMap(collisionLayer->GetTileMap(), tilesize);
 
-    Warrior* warrior = new Warrior(new Properties(100, 200, 100, 55, "player_idle"));
+    Warrior* warrior = new Warrior(new Properties(100, 200, 136, 96, "player_idle"));
     Camera::GetInstance()->SetTarget(warrior->GetOrigin());
     m_GameObjects.push_back(warrior);
 
@@ -68,7 +70,7 @@ void Play::Events(){
     if(m_EditMode && Input::GetInstance()->GetKeyDown(SDL_SCANCODE_F5))
         m_EditMode = false;
 
-    SDL_Delay(100);
+    //SDL_Delay(100);
 }
 
 bool Play::Exit(){

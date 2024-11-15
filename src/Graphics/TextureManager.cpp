@@ -10,13 +10,13 @@ SDL_Texture* TextureManager::Load(std::string filename){
 
     SDL_Surface* surface = IMG_Load(filename.c_str());
     if(surface == nullptr){
-        std::cout << "IMG_Load Failed: " << filename << " " << SDL_GetError() << std::endl;
+        CORE_ERROR("IMG_Load Failed: {0} {1}", filename, SDL_GetError());
         return nullptr;
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(Engine::GetInstance()->GetRenderer(), surface);
     if(texture == nullptr){
-        std::cout << "Failed to create surface: " << SDL_GetError() << std::endl;
+        CORE_ERROR("SDL_CreateTextureFromSurface Failed: {0}", SDL_GetError());
         return nullptr;
     }
     SDL_FreeSurface(surface);
@@ -26,15 +26,16 @@ SDL_Texture* TextureManager::Load(std::string filename){
 bool TextureManager::Add(std::string id, std::string filename){
 
     if(m_TextureMap.count(id) > 0){
-        std::cout << "Texture id: " << id << " already exist in map" << std::endl;
+        CORE_INFO("Texture id: {0} already exist in map", id);
         return false;
     }
     else{
         SDL_Texture* texture = Load(filename);
         if(texture == nullptr){
-            std::cout << "Texture id: "<< id << " is empty" << std::endl;
+            CORE_ERROR("Texture id: {0} is empty", id);
             return false;
         }
+        CORE_INFO("Texture id: {0} loaded", id);
         m_TextureMap[id] = texture;
     }
     return true;
@@ -66,7 +67,7 @@ bool TextureManager::Parse(std::string source){
     TiXmlDocument xml;
     xml.LoadFile(source);
     if(xml.Error()){
-        std::cout << "Failed to load: " << source << std::endl;
+        CORE_ERROR("Failed to load: {0}", source);
         return false;
     }
 
@@ -83,7 +84,7 @@ bool TextureManager::Parse(std::string source){
         }
     }
 
-    std::cout << source << " Parsed!" << std::endl;
+    CORE_INFO("{0} Parsed!", source);
     return true;
 }
 
@@ -95,5 +96,5 @@ void TextureManager::Clean(){
     for(TextureMap::iterator it = m_TextureMap.begin(); it != m_TextureMap.end(); it++)
         SDL_DestroyTexture(it->second);
     m_TextureMap.clear();
-    std::cout << "Texture Map is cleaned!" << std::endl;
+    CORE_WARN("Texture Map is cleaned!");
 }
