@@ -1,22 +1,19 @@
 #include "SpriteAnimation.h"
 #include "../Graphics/TextureManager.h"
 
-SpriteAnimation::SpriteAnimation(bool repeat) : Animation(repeat) {}
+SpriteAnimation::SpriteAnimation(bool repeat): Animation(repeat){}
 
-void SpriteAnimation::Update(float deltaTime) 
-{
-    m_CurrentFrame = (SDL_GetTicks() / m_Speed) % m_FrameCount;
+void SpriteAnimation::Draw(float x, float y, int width, int height, SDL_RendererFlip flip, float scaleX, float scaleY, float rotation, float speedRatio){
+    TextureManager::GetInstance()->DrawFrame(m_TextureID, x, y, width, height, m_SpriteRow, m_CurrentFrame, flip, scaleX, scaleY, rotation, speedRatio);
 }
 
-void SpriteAnimation::Draw(std::string id, int x, int y, int width, int height, float scaleX, float scaleY, SDL_RendererFlip flip) 
-{
-    TextureManager::GetInstance()->DrawFrame(id, x, y, width, height, m_SpriteRow, m_CurrentFrame, flip);
+void SpriteAnimation::Update(float dt){
+    m_CurrentFrame = (SDL_GetTicks()/m_Speed) % m_FrameCount;
 }
 
-void SpriteAnimation::SetProps(std::string textureID, int spriteRow, int frameCount, int speed) 
-{
+void SpriteAnimation::SetProps(std::string textureID, int spriteRow, int frameCount, int speed){
+    m_Speed = speed;
     m_TextureID = textureID;
     m_SpriteRow = spriteRow;
     m_FrameCount = frameCount;
-    m_Speed = speed;
 }

@@ -1,64 +1,57 @@
 #include "Enemy.h"
-#include "../Collision/CollisionHandler.h"
 #include "../Camera/Camera.h"
-#include "../Core/Log.h"
+#include "../Collision/CollisionHandler.h"
+#include <iostream>
 #include "../Factory/ObjectFactory.h"
 
 static Registrar<Enemy> registrar("Enemy");
 
-Enemy::Enemy(Properties* props) : Character(props) 
-{
-    m_RigidBody = new RigidBody();
-    m_RigidBody->SetGravity(3.0f);
-    
+Enemy::Enemy(Properties* props):Character(props){
+    m_RigiBody = new RigidBody();
+    m_RigiBody->SetGravity(3.5);
     m_Collider = new Collider();
-    m_Collider->SetOffset(-20, -5, 40, 15);
-    
-    m_Animation = new SpriteAnimation();
-    m_Animation->SetProps("Enemy_Idle", 0, 7, 100);
-    
+
+    m_Animation = new SeqAnimation(false);
+    m_Animation->Parse("assets/animation.aml");
+    m_Animation->SetCurrentSeq("boss_appear");
 }
 
-void Enemy::Draw() 
-{
-    m_Animation->Draw("Enemy_Idle",m_Transform->X, m_Transform->Y, 64, 64, m_Flip);
-    m_Collider->Draw();
+void Enemy::Draw(){
+    //m_Animation->DrawFrame(m_Transform->X, m_Transform->Y, m_Flip, 0.3f, 0.3f);
 }
 
-void Enemy::Clean() 
-{
-    delete m_Collider;
-    delete m_RigidBody;
-    delete m_Animation;
-}
+void Enemy::Update(float dt){
 
-void Enemy::Update(float deltatime) 
-{
-    // move on x-axis
-    m_RigidBody->Update(deltatime);
+    // X-Axis movements
+    m_RigiBody->Update(dt);
     m_LastSafePosition.X = m_Transform->X;
-    m_Transform->TranslateX(m_RigidBody->GetPosition().X);
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 64, 64);
+    m_Transform->X += m_RigiBody->GetPosition().X;
+    m_Collider->Set(m_Transform->X, m_Transform->Y, 140, 100);
 
-    if(m_Collider->CollideWithMap())
+    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
         m_Transform->X = m_LastSafePosition.X;
-    
 
-    // move on y-axis
-    m_RigidBody->Update(deltatime);
+    // Y-Axis movements
+    m_RigiBody->Update(dt);
     m_LastSafePosition.Y = m_Transform->Y;
-    m_Transform->TranslateY(m_RigidBody->GetPosition().Y);
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 64, 64);
+    m_Transform->Y += m_RigiBody->GetPosition().Y;
+    m_Collider->Set(m_Transform->X, m_Transform->Y, 140, 100);
 
-    if(m_Collider->CollideWithMap())
+    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
         m_Transform->Y = m_LastSafePosition.Y;
 
-    // if(m_Animation->IsEnded())
-    //     m_Animation->SetProps("Enemy_Idle", 0, 7, 100);
+    m_Animation->Update(dt);
 
-    //update the current value of origin
-    m_origin->x = m_Transform->X + m_Width / 2;
-    m_origin->y = m_Transform->Y + m_Height / 2;
-    
-    m_Animation->Update(deltatime);
+    if(m_Animation->IsEnded()){
+        m_Animation->SetRepeat(true);
+        m_Animation->SetCurrentSeq("boss_idle");
+    }
 }
+
+
+void Enemy::Clean(){
+
+}
+
+
+

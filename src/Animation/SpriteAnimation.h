@@ -6,12 +6,12 @@
 #include "Animation.h"
 
 class SpriteAnimation : public Animation {
-public:
+ public:
     SpriteAnimation(bool repeat = true);
 
-    virtual void Update(float deltaTime);
-    void Draw(std::string id, int x, int y, int width, int height, float scaleX=1.0f, float scaleY=1.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    virtual void Update(float dt);
     void SetProps(std::string textureID, int spriteRow, int frameCount, int speed);
+    void Draw(float x, float y, int spriteWidth, int spriteHeight, SDL_RendererFlip flip=SDL_FLIP_NONE, float scaleX=1.0, float scaleY=1.0, float rotation=0.0f, float speedRatio=1.0f);
 
 private:
     int m_Speed;
