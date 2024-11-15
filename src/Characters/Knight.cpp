@@ -6,18 +6,11 @@
 #include "../Camera/Camera.h"
 #include "../Collision/CollisionHandler.h"
 #include "../Core/Log.h"
+#include "../Factory/ObjectFactory.h"
 
+static Registrar<Knight> registrar("Knight");
 
 Knight::Knight(Properties* props) : Character(props)
-{
-
-    m_RigidBody = new RigidBody();
-
-    m_Animation = new SequenceAnimation();
-
-}
-
-Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH, HEIGHT, SDL_FLIP_NONE))
 {
     m_JumpTime = JUMP_TIME;
     m_JumpForce = JUMP_FORCE;
@@ -40,20 +33,12 @@ Knight::Knight() : Character(new Properties("HeroKnight_Idle_0", 200, 200, WIDTH
     std::string animationFilePath = std::filesystem::absolute("assets/animation.xml").string();
     CORE_WARN("Animation file path: {0}", animationFilePath);
     m_Animation->Parse(animationFilePath);
-
 }
 
 void Knight::Draw()
 {
     m_Animation->DrawFrame(m_Transform->X, m_Transform->Y, 1.0f, 1.0f, m_Flip);
-
-    //TODO: remove here and add it to collider, to see the box collider
-    Vector2D cam = Camera::GetInstance()->GetPosition();
-    SDL_Rect box = m_Collider->Get();
-    box.x -= cam.X;
-    box.y -= cam.Y;  
-    SDL_RenderDrawRect(Engine::GetInstance()->GetRenderer(), &box);
-    //////////////////////////////////////////////////////////
+    m_Collider->Draw();   
 }
 
 void Knight::Update(float deltatime)
@@ -127,7 +112,7 @@ void Knight::Update(float deltatime)
     m_Transform->X += (m_RigidBody->GetPosition().X);
     m_Collider->Set(m_Transform->X, m_Transform->Y, WIDTH, HEIGHT);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
+    if(m_Collider->CollideWithMap())
         m_Transform->X = m_LastSafePosition.X;
 
     // move on y-axis
@@ -136,7 +121,7 @@ void Knight::Update(float deltatime)
     m_Transform->Y += (m_RigidBody->GetPosition().Y);
     m_Collider->Set(m_Transform->X, m_Transform->Y, WIDTH, HEIGHT);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
+    if(m_Collider->CollideWithMap())
     {
         m_IsGrounded = true;
         m_Transform->Y = m_LastSafePosition.Y;
@@ -174,6 +159,8 @@ void Knight::AnimationState()
 
 void Knight::Clean()
 {
-
+    delete m_Collider;
+    delete m_RigidBody;
+    delete m_Animation;
 }
 

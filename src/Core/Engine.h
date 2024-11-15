@@ -30,7 +30,7 @@ class Engine
         inline SDL_Renderer* GetRenderer() { return m_Renderer; };
 
     private:
-        Engine(){};
+        Engine() = default;
         bool m_IsRunning;
         
         GameMap* m_LevelMap;

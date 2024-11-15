@@ -9,11 +9,9 @@
 #include "../Camera/Camera.h"
 #include "../Characters/Enemy.h"
 #include "../Characters/Dragon.h"
+#include "../Factory/ObjectFactory.h"
 
 Engine* Engine::s_Instance = nullptr;
-Knight* knight = nullptr;
-Enemy* enemy = nullptr;
-Dragon* dragon = nullptr;
 
 bool Engine::Init()
 {
@@ -51,13 +49,11 @@ bool Engine::Init()
 
     TextureManager::GetInstance()->ParseTextures("assets/textures.xml");
 
-    knight = new Knight();
-    enemy = new Enemy(new Properties("Enemy_Idle", 280, 200, 64, 64, SDL_FLIP_HORIZONTAL));
-    dragon = new Dragon(new Properties("Dragon", 500, 200, 72, 72, SDL_FLIP_HORIZONTAL));
-
+    GameObject* knight = ObjectFactory::GetInstance()->CreateObject("Knight", new Properties("HeroKnight_Idle_0", 200, 200, 64, 64, SDL_FLIP_NONE));
+    GameObject* enemy = ObjectFactory::GetInstance()->CreateObject("Enemy", new Properties("Enemy_Idle", 280, 200, 64, 64, SDL_FLIP_HORIZONTAL));
+    
     m_GameObjects.push_back(knight);
     m_GameObjects.push_back(enemy);
-    m_GameObjects.push_back(dragon);
 
     Camera::GetInstance()->SetTarget(knight->GetOrigin());
 

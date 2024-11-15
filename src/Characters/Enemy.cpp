@@ -2,6 +2,9 @@
 #include "../Collision/CollisionHandler.h"
 #include "../Camera/Camera.h"
 #include "../Core/Log.h"
+#include "../Factory/ObjectFactory.h"
+
+static Registrar<Enemy> registrar("Enemy");
 
 Enemy::Enemy(Properties* props) : Character(props) 
 {
@@ -19,14 +22,7 @@ Enemy::Enemy(Properties* props) : Character(props)
 void Enemy::Draw() 
 {
     m_Animation->Draw("Enemy_Idle",m_Transform->X, m_Transform->Y, 64, 64, m_Flip);
-
-    //TODO: remove here and add it to collider, to see the box collider
-    Vector2D cam = Camera::GetInstance()->GetPosition();
-    SDL_Rect box = m_Collider->Get();
-    box.x -= cam.X;
-    box.y -= cam.Y;  
-    SDL_RenderDrawRect(Engine::GetInstance()->GetRenderer(), &box);
-    //////////////////////////////////////////////////////////
+    m_Collider->Draw();
 }
 
 void Enemy::Clean() 
@@ -44,7 +40,7 @@ void Enemy::Update(float deltatime)
     m_Transform->TranslateX(m_RigidBody->GetPosition().X);
     m_Collider->Set(m_Transform->X, m_Transform->Y, 64, 64);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
+    if(m_Collider->CollideWithMap())
         m_Transform->X = m_LastSafePosition.X;
     
 
@@ -54,9 +50,8 @@ void Enemy::Update(float deltatime)
     m_Transform->TranslateY(m_RigidBody->GetPosition().Y);
     m_Collider->Set(m_Transform->X, m_Transform->Y, 64, 64);
 
-    if(CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()))
+    if(m_Collider->CollideWithMap())
         m_Transform->Y = m_LastSafePosition.Y;
-
 
     // if(m_Animation->IsEnded())
     //     m_Animation->SetProps("Enemy_Idle", 0, 7, 100);

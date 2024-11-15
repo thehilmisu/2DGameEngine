@@ -15,6 +15,7 @@ class Timer
 
     private:
         Timer(){};
+        ~Timer() = default;
         static Timer* s_Instance;
         float m_DeltaTime;
         float m_LastTime;
