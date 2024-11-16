@@ -1,7 +1,7 @@
 #include "TileLayer.h"
 #include "../Graphics/TextureManager.h"
 
-TileLayer::TileLayer(int tilesize, int width, int height, TileMap tilemap, TilesetsList tilesets):
+TileLayer::TileLayer(int tilesize, int width, int height, TileMatrix tilemap, TilesetsList tilesets):
 m_TileSize(tilesize), m_Width(width), m_Height(height), m_Tilemap(tilemap), m_Tilesets(tilesets){}
 
 void TileLayer::Render(){

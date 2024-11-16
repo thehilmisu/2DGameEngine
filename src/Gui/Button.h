@@ -3,7 +3,7 @@
 
 #include "Widget.h"
 #include "../Inputs/Input.h"
-
+#include <string>
 namespace Gui{
 
     const int BTN_BORDER_THICKNESS = 1;

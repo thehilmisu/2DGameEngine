@@ -27,6 +27,8 @@ class TextureManager
         void DrawFrame(std::string id, int x, int y, int w, int h, int row, int frame, SDL_RendererFlip flip=SDL_FLIP_NONE,
                         float scaleX=1.0f, float scaleY=1.0f,  float rotation=0.0f, float speedRatio=1.0f);
 
+        SDL_Texture* GetTexture(std::string id){return m_TextureMap[id];}
+
         static TextureManager* GetInstance(){ return s_Instance = (s_Instance != nullptr)? s_Instance : new TextureManager();}
 
     private:

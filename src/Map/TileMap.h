@@ -4,11 +4,11 @@
 #include "Layer.h"
 #include <vector>
 
-class GameMap {
+class TileMap {
 
     public:
 
-        GameMap(){}
+        TileMap(){}
 
         void Render(){
             for(auto layer : m_MapLayers)

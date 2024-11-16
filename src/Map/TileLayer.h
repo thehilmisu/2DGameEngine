@@ -14,12 +14,12 @@ struct Tileset{
 };
 
 using TilesetsList = std::vector<Tileset> ;
-using TileMap = std::vector<std::vector<int> >;
+using TileMatrix = std::vector<std::vector<int> >;
 
 class TileLayer : public Layer {
 
     public:
-        TileLayer(int tilesize, int width, int height, TileMap tilemap, TilesetsList tilesets);
+        TileLayer(int tilesize, int width, int height, TileMatrix tilemap, TilesetsList tilesets);
 
         virtual void Render();
         virtual void Update();
@@ -27,13 +27,13 @@ class TileLayer : public Layer {
         inline int GetWidth(){return m_Width;}
         inline int GetHeight(){return m_Height;}
         inline int GetTileSize(){return m_TileSize;}
-        inline TileMap GetTileMap(){return m_Tilemap;}
+        inline TileMatrix GetTileMap(){return m_Tilemap;}
 
     private:
         int m_TileSize;
         int m_Width;
         int m_Height;
-        TileMap m_Tilemap;
+        TileMatrix m_Tilemap;
         TilesetsList m_Tilesets;
 };
 

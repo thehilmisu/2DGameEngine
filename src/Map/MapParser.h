@@ -3,14 +3,14 @@
 
 #include <map>
 #include <string>
-#include "GameMap.h"
+#include "TileMap.h"
 #include "tinyxml.h"
 #include "TileLayer.h"
 
 class MapParser {
 
    public:
-        GameMap* Load(std::string filename);
+        TileMap* Load(std::string filename);
         inline static MapParser* GetInstance(){ return s_Instance = (s_Instance != nullptr)? s_Instance : new MapParser();}
 
     private:

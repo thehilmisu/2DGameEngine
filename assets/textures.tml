@@ -4,6 +4,14 @@
     <texture id="objects" source="assets/maps/objects.png"/>
     <texture id="Jungle_terrain" source="assets/maps/Jungle_terrain.png"/>
 
+    <texture id="sky" source="assets/images/sky.png"/>
+    <texture id="mountain" source="assets/images/mountain.png"/>
+    <texture id="cloud" source="assets/images/cloud.png"/>
+    <texture id="pine1" source="assets/images/pine1.png"/>
+    <texture id="pine2" source="assets/images/pine2.png"/>
+    <texture id="tree" source="assets/images/tree.png"/>
+     <texture id="Tree_2" source="assets/images/Tree_2.png"/>
+
     <texture id="player_run" source="assets/player/Run.png"/>
     <texture id="player_idle" source="assets/player/Idle.png"/>
     <texture id="player_jump" source="assets/player/Jump.png"/>

@@ -5,6 +5,7 @@ namespace Gui{
     Button::Button(Attr attr, void (*clickAction)()) : Widget(attr){
         m_ClickAction = clickAction;
         SetBorder(BTN_BORDER_THICKNESS);
+
     }
 
     void Button::Draw(){

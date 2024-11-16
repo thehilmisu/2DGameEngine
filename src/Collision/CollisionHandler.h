@@ -4,7 +4,7 @@
 #include "SDL2/SDL.h"
 #include <vector>
 #include "../Map/TileLayer.h"
-#include "../Map/GameMap.h"
+#include "../Map/TileMap.h"
 
 class CollisionHandler
 {
@@ -12,7 +12,7 @@ class CollisionHandler
     public:
         bool MapCollision(SDL_Rect a);
         bool CheckCollision(SDL_Rect a, SDL_Rect b);
-        void SetCollisionMap(TileMap tilemap, int tilesize);
+        void SetCollisionMap(TileMatrix tilemap, int tilesize);
 
         inline static CollisionHandler* GetInstance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new CollisionHandler();}
 
@@ -21,7 +21,7 @@ class CollisionHandler
 
         int m_MapTileSize;
         int m_MapWidth, m_MapHeight;
-        TileMap m_CollisionTilemap;
+        TileMatrix m_CollisionTilemap;
         static CollisionHandler* s_Instance;
 };
 

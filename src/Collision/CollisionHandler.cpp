@@ -5,7 +5,7 @@
 
 CollisionHandler* CollisionHandler::s_Instance = nullptr;
 
-void CollisionHandler::SetCollisionMap(TileMap tilemap, int tilesize){
+void CollisionHandler::SetCollisionMap(TileMatrix tilemap, int tilesize){
     m_CollisionTilemap = tilemap;
     m_MapTileSize = tilesize;
     m_MapHeight = tilemap.size();
@@ -19,7 +19,6 @@ bool CollisionHandler::CheckCollision(SDL_Rect a, SDL_Rect b){
 }
 
 bool CollisionHandler::MapCollision(SDL_Rect a){
-
     int left_tile = a.x/m_MapTileSize;
     int right_tile = (a.x + a.w)/m_MapTileSize;
 

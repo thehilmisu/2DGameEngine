@@ -3,7 +3,7 @@
 
 MapParser* MapParser::s_Instance = nullptr;
 
-GameMap* MapParser::Load(std::string source){
+TileMap* MapParser::Load(std::string source){
     TiXmlDocument xml;
     xml.LoadFile(source);
     if(xml.Error()){
@@ -26,7 +26,7 @@ GameMap* MapParser::Load(std::string source){
     }
 
     // Parse Layers
-    GameMap* gamemap = new GameMap();
+    TileMap* gamemap = new TileMap();
     for(TiXmlElement* e=root->FirstChildElement(); e!= nullptr; e=e->NextSiblingElement()){
         if(e->Value() == std::string("layer")){
             TileLayer* tilelayer = ParseTileLayer(e, tilesets, tilesize, rowcount, colcount);
@@ -52,7 +52,7 @@ TileLayer* MapParser::ParseTileLayer(TiXmlElement* xmlLayer, TilesetsList tilese
     std::istringstream iss(matrix);
     std::string id;
 
-    TileMap tilemap(rowcount, std::vector<int> (colcount, 0));
+    TileMatrix tilemap(rowcount, std::vector<int> (colcount, 0));
     for(int row = 0; row < rowcount; row++){
         for (int col = 0; col < colcount; col++){
             getline(iss, id, ',');

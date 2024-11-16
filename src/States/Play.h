@@ -4,7 +4,7 @@
 #include "GameState.h"
 #include "Menu.h"
 
-#include "../Map/GameMap.h"
+#include "../Map/TileMap.h"
 #include "../Object/GameObject.h"
 #include "SDL2/SDL.h"
 #include "../Core/Engine.h"
@@ -18,6 +18,7 @@
 #include "../Collision/CollisionHandler.h"
 #include "../Timer/Timer.h"
 #include "../Inputs/Input.h"
+#include "../Map/ImgLayer.h"
 
 class Play : public GameState{
 
@@ -36,7 +37,8 @@ class Play : public GameState{
 
     private:
         bool m_EditMode;
-        GameMap* m_LevelMap;
+        TileMap* m_LevelMap;
+        std::vector<ImgLayer*>  m_ParalaxBg;
         std::vector<GameObject*> m_GameObjects;
 };
 
