@@ -14,6 +14,10 @@ SDL_Texture* TextureManager::Load(std::string filename){
         return nullptr;
     }
 
+    #if 1
+        CORE_INFO("Texture {0} loaded", filename);
+    #endif
+
     SDL_Texture* texture = SDL_CreateTextureFromSurface(Engine::GetInstance()->GetRenderer(), surface);
     if(texture == nullptr){
         CORE_ERROR("SDL_CreateTextureFromSurface Failed: {0}", SDL_GetError());

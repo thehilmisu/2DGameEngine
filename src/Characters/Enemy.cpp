@@ -12,7 +12,7 @@ Enemy::Enemy(Properties* props):Character(props){
     m_Collider = new Collider();
 
     m_Animation = new SeqAnimation(false);
-    m_Animation->Parse("assets/animation.aml");
+    m_Animation->Parse("assets/animations/boss/boss.aml");
     m_Animation->SetCurrentSeq("boss_appear");
 }
 

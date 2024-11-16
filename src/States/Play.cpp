@@ -1,5 +1,15 @@
 #include "Play.h"
 #include "../Core/Log.h"
+#include "Menu.h"
+#include "Pause.h"
+
+
+#include "../Gui/Frame.h"
+#include "../Gui/Button.h"
+#include "../Gui/Panel.h"
+#include "../Gui/Slider.h"
+
+Gui::Frame* frame = nullptr;
 
 Play::Play(){}
 
@@ -15,14 +25,25 @@ bool Play::Init(){
     int width = collisionLayer->GetWidth()*tilesize;
     int height = collisionLayer->GetHeight()*tilesize;
 
-    CORE_INFO("tilesize: {0}, width: {1}, height: {2}", tilesize, width, height);
-
     Camera::GetInstance()->SetSceneLimit(width, height);
     CollisionHandler::GetInstance()->SetCollisionMap(collisionLayer->GetTileMap(), tilesize);
 
     Warrior* warrior = new Warrior(new Properties(100, 200, 136, 96, "player_idle"));
+    Enemy* enemy = new Enemy(new Properties(300, 200, 456, 348, "boss_appear"));
+    
     Camera::GetInstance()->SetTarget(warrior->GetOrigin());
+    
     m_GameObjects.push_back(warrior);
+    m_GameObjects.push_back(enemy);
+
+
+    frame = new Gui::Frame(Gui::Attr(m_Ctxt, 100, 100, 500, 300));
+
+    Gui::Frame* f2 = new Gui::Frame(Gui::Attr(m_Ctxt, 100, 100, 250, 100));
+    f2->AddChild(new Gui::Button(Gui::Attr(m_Ctxt, 50, 50, 100, 35), OpenMenu));
+    frame->AddChild(new Gui::Button(Gui::Attr(m_Ctxt, 100, 50, 100, 35), PauseGame));
+
+    frame->AddChild(f2);
 
     CORE_INFO("Play state initialized");
     return true;
@@ -40,6 +61,8 @@ void Play::Render(){
 
     SDL_Rect camera = Camera::GetInstance()->GetViewBox();
 
+    frame->Draw();
+
     SDL_RenderCopy(m_Ctxt, nullptr, &camera, nullptr);
     SDL_RenderPresent(m_Ctxt);
 }
@@ -47,16 +70,14 @@ void Play::Render(){
 void Play::Update(){
 
     Events();
+    float dt = Timer::GetInstance()->GetDeltaTime();
+    for(auto gameobj : m_GameObjects)
+        gameobj->Update(dt);
 
-    if(!m_EditMode){
-        float dt = Timer::GetInstance()->GetDeltaTime();
+    Camera::GetInstance()->Update();
+    m_LevelMap->Update();
 
-        for(auto gameobj : m_GameObjects)
-            gameobj->Update(dt);
-
-        Camera::GetInstance()->Update();
-        m_LevelMap->Update();
-    }
+    frame->Update();
 }
 
 void Play::Events(){
@@ -95,7 +116,8 @@ void Play::OpenMenu(){
 }
 
 void Play::PauseGame(){
-
+    Engine::GetInstance()->PushState(new Pause());
+    CORE_INFO("Pause game");
 }
 
 
