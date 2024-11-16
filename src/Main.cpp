@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 {
     Engine::GetInstance()->Init();
 
-    while(Engine::GetInstance()->IsRunnning())
+    while(Engine::GetInstance()->IsRunning())
     {
         Engine::GetInstance()->Events();
         Engine::GetInstance()->Update();

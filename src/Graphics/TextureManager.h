@@ -6,27 +6,32 @@
 #include "SDL2/SDL_image.h"
 #include <map>
 
+using TextureMap = std::map<std::string, SDL_Texture*>;
+
+
 class TextureManager
 {
     public:
-        static TextureManager* GetInstance(){
-            return s_Instance = ( s_Instance != nullptr) ? s_Instance : new TextureManager();
-        }
-
-        bool Load(std::string id, std::string  filename);
-        bool ParseTextures(std::string source);
-        void Drop(std::string id);
         void Clean();
+        void Erase(std::string id);
+        bool Parse(std::string source);
+        SDL_Texture* Load(std::string filename);
+        bool Add(std::string id, std::string filename);
+        TextureMap GetTextureMap(){return m_TextureMap;}
 
-        void Draw(std::string id, int x, int y, int width, int height, float scaleX, float scaleY, float scrollRatio, SDL_RendererFlip flip=SDL_FLIP_NONE);
-        void DrawMultiple(std::string id, int x, int y, int width, int height, SDL_RendererFlip flip=SDL_FLIP_NONE);
-        void DrawTile(std::string tilesetID, int tileSize, int x, int y, int row, int frame, SDL_RendererFlip flip=SDL_FLIP_NONE);
-        void DrawFrame(std::string id, int x, int y, int width, int height, 
-                        int row, int frame, SDL_RendererFlip flip=SDL_FLIP_NONE);
-    
+        void DrawTile(std::string tilesetID, int x, int y, int tilesize, int row, int col, float speedRatio=1.0f);
+
+        void Draw(std::string id, int x, int y, int w, int h, SDL_RendererFlip flip=SDL_FLIP_NONE,
+                  float scaleX=1.0f, float scaleY=1.0f, float rotation=0.0f, float speedRatio=1.0f);
+
+        void DrawFrame(std::string id, int x, int y, int w, int h, int row, int frame, SDL_RendererFlip flip=SDL_FLIP_NONE,
+                        float scaleX=1.0f, float scaleY=1.0f,  float rotation=0.0f, float speedRatio=1.0f);
+
+        static TextureManager* GetInstance(){ return s_Instance = (s_Instance != nullptr)? s_Instance : new TextureManager();}
+
     private:
-        TextureManager(){};
-        std::map<std::string, SDL_Texture*> m_TextureMap;
+        TextureManager(){}
+        TextureMap m_TextureMap;
         static TextureManager* s_Instance;
 };
 

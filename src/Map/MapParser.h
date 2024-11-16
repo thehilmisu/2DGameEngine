@@ -4,30 +4,21 @@
 #include <map>
 #include <string>
 #include "GameMap.h"
-#include "TileLayer.h"
 #include "tinyxml.h"
+#include "TileLayer.h"
 
+class MapParser {
 
-class MapParser
-{
-    public:
-        bool Load();
-        void Clean();
+   public:
+        GameMap* Load(std::string filename);
+        inline static MapParser* GetInstance(){ return s_Instance = (s_Instance != nullptr)? s_Instance : new MapParser();}
 
-        inline GameMap* GetMap(std::string id) { return m_MapDict[id]; };
-        inline static MapParser* GetInstance(){
-            return s_Instance = ( s_Instance != nullptr) ? s_Instance : new MapParser();
-        }
-    
     private:
-        bool Parse(std::string id, std::string source);
+        MapParser(){}
         Tileset ParseTileset(TiXmlElement* xmlTileset);
-        TileLayer* ParseTileLayer(TiXmlElement* xmlLayer, TilesetList tilesets, int tilesize, int rowcount, int colcount);
+        TileLayer* ParseTileLayer(TiXmlElement* xmlLayer, std::vector<Tileset> tilesets, int tilesize, int rowcount, int colcount);
 
-    private:
-        MapParser() {}
         static MapParser* s_Instance;
-        std::map<std::string, GameMap*> m_MapDict;
 };
 
-#endif
+#endif // MAPPARSER_H

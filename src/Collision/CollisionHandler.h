@@ -6,22 +6,23 @@
 #include "../Map/TileLayer.h"
 #include "../Map/GameMap.h"
 
-class CollisionHandler 
+class CollisionHandler
 {
-public:
-    static CollisionHandler* GetInstance(){
-        return s_Instance = ( s_Instance != nullptr) ? s_Instance : new CollisionHandler();
-    }
 
-    bool CheckCollision(SDL_Rect a, SDL_Rect b);
-    bool MapCollision(const SDL_Rect& a);
+    public:
+        bool MapCollision(SDL_Rect a);
+        bool CheckCollision(SDL_Rect a, SDL_Rect b);
+        void SetCollisionMap(TileMap tilemap, int tilesize);
 
-private:
-    CollisionHandler();
-    TileMap m_CollisionTilemap;
-    TileLayer* m_CollisionLayer;
-    static CollisionHandler* s_Instance;
+        inline static CollisionHandler* GetInstance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new CollisionHandler();}
 
+    private:
+        CollisionHandler(){}
+
+        int m_MapTileSize;
+        int m_MapWidth, m_MapHeight;
+        TileMap m_CollisionTilemap;
+        static CollisionHandler* s_Instance;
 };
 
 #endif // COLLISIONHANDLER_H
