@@ -10,7 +10,9 @@
     <texture id="pine1" source="assets/images/pine1.png"/>
     <texture id="pine2" source="assets/images/pine2.png"/>
     <texture id="tree" source="assets/images/tree.png"/>
-     <texture id="Tree_2" source="assets/images/Tree_2.png"/>
+    <texture id="tree_dead" source="assets/images/tree_dead.png"/>
+    <texture id="Sign_1" source="assets/images/Sign_1.png"/>
+    <texture id="Sign_2" source="assets/images/Sign_2.png"/>
 
     <texture id="player_run" source="assets/player/Run.png"/>
     <texture id="player_idle" source="assets/player/Idle.png"/>
@@ -57,3 +59,5 @@
     <texture id="boss_die6" source="assets/boss/die/die_6.png"/>
     <texture id="boss_die7" source="assets/boss/die/die_7.png"/>
 </textures>
+
+ 

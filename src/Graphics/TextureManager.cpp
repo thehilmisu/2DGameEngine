@@ -45,6 +45,20 @@ bool TextureManager::Add(std::string id, std::string filename){
     return true;
 }
 
+void TextureManager::Draw(Transform* tf){
+    SDL_Rect srcRect = {0, 0, tf->Width, tf->Height};
+    Vector2D cam = Camera::GetInstance()->GetPosition()*tf->ScrollRatio;
+    SDL_Rect dstRect = {tf->X - cam.X, tf->Y - cam.Y, tf->Width*tf->ScaleX, tf->Height*tf->ScaleY};
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[tf->TextureID], &srcRect, &dstRect, tf->Rotation, nullptr, tf->Flip);
+}
+
+void TextureManager::DrawFrame(Transform* tf, int row, int frame){
+    Vector2D cam = Camera::GetInstance()->GetPosition()*tf->ScrollRatio;
+    SDL_Rect srcRect = {tf->Width*frame, tf->Height*row, tf->Width, tf->Height};
+    SDL_Rect dstRect = {tf->X - cam.X, tf->Y - cam.Y, tf->Width*tf->ScaleX, tf->Height*tf->ScaleY};
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[tf->TextureID], &srcRect, &dstRect, tf->Rotation, nullptr, tf->Flip);
+}
+
 void TextureManager::Draw(std::string id, int x, int y, int w, int h, SDL_RendererFlip flip, float scaleX, float scaleY, float rotation, float speedRatio){
     SDL_Rect srcRect = {0, 0, w, h};
     Vector2D cam = Camera::GetInstance()->GetPosition() * speedRatio;

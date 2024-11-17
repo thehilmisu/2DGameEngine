@@ -1,6 +1,8 @@
 
 #include "Core/Engine.h"
 #include "Timer/Timer.h"
+#include "Inputs/Input.h"
+#include "States/StateManager.h"
 
 int main(int argc, char** argv)
 {
@@ -8,9 +10,9 @@ int main(int argc, char** argv)
 
     while(Engine::GetInstance()->IsRunning())
     {
-        Engine::GetInstance()->Events();
-        Engine::GetInstance()->Update();
-        Engine::GetInstance()->Render();
+        Input::GetInstance()->Listen();
+        StateManager::GetInstance()->Render();
+        StateManager::GetInstance()->Update();        
         Timer::GetInstance()->Tick();
     }
 

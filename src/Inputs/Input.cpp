@@ -1,22 +1,20 @@
 #include "Input.h"
 #include "../Core/Engine.h"
+#include "../Camera/Camera.h"
+
 
 Input* Input::s_Instance = nullptr;
 
-Input::Input()
-{
-    m_MousePosition = new Vector2D();
+Input::Input(){
     m_KeyStates = SDL_GetKeyboardState(nullptr);
     m_MouseButtonStates = {false, false, false};
 }
 
-void Input::Listen()
-{
+void Input::Listen(){
     SDL_Event event;
-
-    while (SDL_PollEvent(&event))
-    {
+    while(SDL_PollEvent(&event)){
         switch(event.type){
+            case SDL_WINDOWEVENT: WindowEvent(event); break;
             case SDL_QUIT: Engine::GetInstance()->Quit(); break;
             case SDL_MOUSEBUTTONDOWN: MouseButtonDown(event); break;
             case SDL_MOUSEBUTTONUP: MouseButtonUp(event); break;
@@ -25,7 +23,6 @@ void Input::Listen()
             case SDL_KEYUP: KeyUp(); break;
         }
     }
-    
 }
 
 void Input::KeyUp(){
@@ -37,8 +34,9 @@ void Input::KeyDown(){
 }
 
 void Input::MouseMotion(SDL_Event event){
-    m_MousePosition->X = event.motion.x;
-    m_MousePosition->Y = event.motion.y;
+    m_MouseLastPosition = m_MousePosition;
+    m_MousePosition.X = event.motion.x;
+    m_MousePosition.Y = event.motion.y;
 }
 
 void Input::MouseButtonUp(SDL_Event event){
@@ -63,6 +61,19 @@ void Input::MouseButtonDown(SDL_Event event){
         m_MouseButtonStates[RIGHT] = true;
 }
 
+void Input::WindowEvent(SDL_Event event){
+    if(event.window.event == SDL_WINDOWEVENT_RESIZED){
+        int width = event.window.data1;
+        int height = event.window.data2;
+        // update window size
+        Engine::GetInstance()->SetWidth(width);
+        Engine::GetInstance()->SetHeight(height);
+        // update camera View port
+        Camera::GetInstance()->SetViewPort({0, 0, width, height});
+        Camera::GetInstance()->Translate(Vector2D(0,0));
+    }
+}
+
 int Input::GetAxisKey(Axis axis){
     switch(axis){
         case HORIZONTAL:
@@ -82,6 +93,6 @@ int Input::GetAxisKey(Axis axis){
         default:
             return 0;
     }
-
+    
     return 0;
 }

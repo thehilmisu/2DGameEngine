@@ -7,26 +7,26 @@
 #include "../Camera/Camera.h"
 #include "../Factory/ObjectFactory.h"
 
-static Registrar<Warrior> registrar("Warrior");
+static Registrar<Warrior> registrar("WARRIOR");
 
-Warrior::Warrior(Properties* props):Character(props){
+Warrior::Warrior(Transform* tf) : GameObject(tf){
     m_JumpTime = JUMP_TIME;
     m_JumpForce = JUMP_FORCE;
     m_AttackTime = ATTACK_TIME;
 
     m_Collider = new Collider();
-    m_Collider->SetBuffer(-60, -20, 0, 0);
+    m_Collider->SetBuffer(-60, -26, 0, 0);
 
     m_RigidBody = new RigidBody();
     m_RigidBody->SetGravity(3.0f);
 
     m_Animation = new SpriteAnimation();
-    m_Animation->SetProps(m_TextureID, 1, 6, 100);
+    m_Animation->SetProps(1, 6, 100);
 }
 
 void Warrior::Draw(){
-    m_Collider->Draw();
-    m_Animation->Draw(m_Transform->X, m_Transform->Y, m_Width, m_Height, m_Flip);
+    //m_Collider->Draw();
+    m_Animation->Draw(m_Tf);
 }
 
 void Warrior::Update(float dt){
@@ -38,14 +38,14 @@ void Warrior::Update(float dt){
     // Run forward
     if(Input::GetInstance()->GetAxisKey(HORIZONTAL) == FORWARD && !m_IsAttacking){
         m_RigidBody->ApplyForceX(FORWARD*RUN_FORCE);
-        m_Flip = SDL_FLIP_NONE;
+        m_Tf->Flip = SDL_FLIP_NONE;
         m_IsRunning = true;
     }
 
     // Run backward
     if(Input::GetInstance()->GetAxisKey(HORIZONTAL) == BACKWARD && !m_IsAttacking){
         m_RigidBody->ApplyForceX(BACKWARD*RUN_FORCE);
-        m_Flip = SDL_FLIP_HORIZONTAL;
+        m_Tf->Flip = SDL_FLIP_HORIZONTAL;
         m_IsRunning = true;
     }
 
@@ -93,58 +93,71 @@ void Warrior::Update(float dt){
 
     // move on X axis
     m_RigidBody->Update(dt);
-    m_LastSafePosition.X = m_Transform->X;
-    m_Transform->X += m_RigidBody->GetPosition().X;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 18, 50);
+    m_LastSafePosition.X = m_Tf->X;
+    m_Tf->X += m_RigidBody->GetPosition().X;
+    m_Collider->Set(m_Tf->X, m_Tf->Y, 18, 50);
 
     if(m_Collider->CollideWithMap())
-        m_Transform->X = m_LastSafePosition.X;
+        m_Tf->X = m_LastSafePosition.X;
 
 
     // move on Y axis
     m_RigidBody->Update(dt);
-    m_LastSafePosition.Y = m_Transform->Y;
-    m_Transform->Y += m_RigidBody->GetPosition().Y;
-    m_Collider->Set(m_Transform->X, m_Transform->Y, 18, 50);
+    m_LastSafePosition.Y = m_Tf->Y;
+    m_Tf->Y += m_RigidBody->GetPosition().Y;
+    m_Collider->Set(m_Tf->X, m_Tf->Y, 18, 50);
 
     if(m_Collider->CollideWithMap()){
         m_IsGrounded = true;
-        m_Transform->Y = m_LastSafePosition.Y;
+        m_Tf->Y = m_LastSafePosition.Y;
     }
     else{
         m_IsGrounded = false;
     }
-    m_Origin->x = m_Transform->X + m_Width/2;
-    m_Origin->y = m_Transform->Y + m_Height/2;
+
+    m_Tf->Origin->X = m_Tf->X + m_Tf->Width/2;
+    m_Tf->Origin->Y = m_Tf->Y + m_Tf->Height/2;
 
     AnimationState();
-    m_Animation->Update(dt);
 }
 
 
 void Warrior::AnimationState(){
     // idling
-    m_Animation->SetProps("player_idle", 0, 6, 100);
+    m_Tf->TextureID = "player_idle";
+    m_Animation->SetProps(0, 6, 100);
 
     // running
-    if(m_IsRunning)
-        m_Animation->SetProps("player_run", 0, 8, 80);
+    if(m_IsRunning){
+        m_Tf->TextureID = "player_run";
+        m_Animation->SetProps(0, 8, 80);
+    }
 
     // crouching
-    if(m_IsCrouching)
-        m_Animation->SetProps("player_crouch", 0, 6, 100);
+    if(m_IsCrouching){
+        m_Tf->TextureID = "player_crouch";
+        m_Animation->SetProps(0, 6, 100);
+    }
 
     // jumping
-    if(m_IsJumping)
-         m_Animation->SetProps("player_jump", 0, 2, 200);
+    if(m_IsJumping){
+        m_Tf->TextureID = "player_jump";
+        m_Animation->SetProps(0, 2, 200);
+    }
 
     // falling
-    if(m_IsFalling)
-         m_Animation->SetProps("player_fall", 0, 2, 400);
+    if(m_IsFalling){
+        m_Tf->TextureID = "player_fall";
+        m_Animation->SetProps(0, 2, 400);
+    }
 
     // attacking
-    if(m_IsAttacking)
-        m_Animation->SetProps("player_attack", 0, 14, 80);
+    if(m_IsAttacking){
+        m_Tf->TextureID = "player_attack";
+        m_Animation->SetProps(0, 14, 80);
+    }
+
+    m_Animation->Update(0);
 }
 
 void Warrior::Clean(){

@@ -5,11 +5,11 @@
 
 CollisionHandler* CollisionHandler::s_Instance = nullptr;
 
-void CollisionHandler::SetCollisionMap(TileMatrix tilemap, int tilesize){
-    m_CollisionTilemap = tilemap;
-    m_MapTileSize = tilesize;
-    m_MapHeight = tilemap.size();
-    m_MapWidth = tilemap[0].size();
+void CollisionHandler::SetCollisionLayer(TileLayer* layer){
+    m_CollisionTilemap = layer->GetTileMap();
+    m_MapWidth = layer->GetWidth();
+    m_MapHeight = layer->GetHeight();
+    m_MapTileSize = layer->GetTileSize();
 }
 
 bool CollisionHandler::CheckCollision(SDL_Rect a, SDL_Rect b){

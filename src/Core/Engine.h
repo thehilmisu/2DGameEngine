@@ -23,13 +23,16 @@ class Engine {
         void Render();
         void Events();
 
-        void PopState();
-        void PushState(GameState* current);
-        void ChangeState(GameState* target);
-
         inline bool IsRunning(){return m_IsRunning;}
+
         inline SDL_Window* GetMainWindow(){return m_Window;}
         inline SDL_Renderer* GetRenderer(){return m_Renderer;}
+
+        inline int GetWidth(){return m_Width;}
+        inline int GetHeight(){return m_Height;}
+        inline void SetWidth(int width){m_Width = width;}
+        inline void SetHeight(int height){m_Height = height;}
+        
         static Engine* GetInstance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new Engine();}
 
     private:
@@ -38,7 +41,7 @@ class Engine {
         SDL_Window* m_Window;
         SDL_Renderer* m_Renderer;
         static Engine* s_Instance;
-        std::vector<GameState*> m_States;
+        int m_Width, m_Height;
 
 };
 

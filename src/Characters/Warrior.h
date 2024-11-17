@@ -1,16 +1,23 @@
 #ifndef WARRIOR_H
 #define WARRIOR_H
 
-#include "Character.h"
-#include "../Animation/SpriteAnimation.h"
+#include "../Object/GameObject.h"
 #include "../Physics/RigidBody.h"
 #include "../Physics/Collider.h"
-#include "../Physics/Vector2D.h"
+#include "../Animation/SeqAnimation.h"
+#include "../Animation/SpriteAnimation.h"
+#include "../Factory/ObjectFactory.h"
 
-class Warrior: public Character{
+#define JUMP_FORCE 10.0f
+#define JUMP_TIME 15.0f;
+
+#define RUN_FORCE 4.0f
+#define ATTACK_TIME 20.0f
+
+class Warrior: public GameObject{
 
     public:
-        Warrior(Properties* props);
+        Warrior(Transform* tf);
         virtual void Draw();
         virtual void Clean();
         virtual void Update(float dt);

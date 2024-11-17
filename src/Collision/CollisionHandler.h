@@ -12,7 +12,7 @@ class CollisionHandler
     public:
         bool MapCollision(SDL_Rect a);
         bool CheckCollision(SDL_Rect a, SDL_Rect b);
-        void SetCollisionMap(TileMatrix tilemap, int tilesize);
+        void SetCollisionLayer(TileLayer* layer);
 
         inline static CollisionHandler* GetInstance(){return s_Instance = (s_Instance != nullptr)? s_Instance : new CollisionHandler();}
 

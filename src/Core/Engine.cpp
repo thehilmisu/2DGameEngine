@@ -1,7 +1,7 @@
 #include "Engine.h"
 #include "assert.h"
 #include "../Inputs/Input.h"
-#include "../States/Menu.h"
+#include "../States/StateManager.h"
 #include "../States/Play.h"
 #include "Log.h"
 
@@ -22,29 +22,25 @@ bool Engine::Init(){
     m_Renderer = SDL_CreateRenderer(m_Window, -1, r_flags);
     assert(m_Renderer != nullptr && SDL_GetError());
 
-    ChangeState(new Play());
+    SetWidth(SCREEN_WIDTH);
+    SetHeight(SCREEN_HEIGHT);
+    
+    StateManager::GetInstance()->ChangeState(new Play());
     return m_IsRunning = true;
 }
 
 void Engine::Render(){
-   m_States.back()->Render();
 }
 
 void Engine::Update(){
-     m_States.back()->Update();
+
 }
 
 void Engine::Events(){
-    Input::GetInstance()->Listen();
+
 }
 
 bool Engine::Clean(){
-
-    for(auto state : m_States){
-        state->Exit();
-        delete state;
-    }
-    m_States.clear();
 
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
@@ -56,32 +52,4 @@ bool Engine::Clean(){
 
 void Engine::Quit(){
     m_IsRunning = false;
-}
-
-void Engine::PopState(){
-    SDL_Delay(100);
-    if(m_States.size() > 1){
-        if(m_States.back()->Exit()){
-            delete m_States.back();
-            m_States.pop_back();
-        }
-    }
-}
-
-void Engine::ChangeState(GameState* target){
-    SDL_Delay(100);
-    if(!m_States.empty()){
-        if(m_States.back()->Exit()){
-            delete m_States.back();
-            m_States.pop_back();
-        }
-    }
-    m_States.push_back(target);
-    m_States.back()->Init();
-}
-
-void Engine::PushState(GameState* current){
-    SDL_Delay(100);
-    m_States.push_back(current);
-    m_States.back()->Init();
 }
