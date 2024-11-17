@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "../Object/Transform.h"
 #include "../Graphics/TextureManager.h"
+#include "../Core/Log.h"
 
 Parser* Parser::s_Instance = nullptr;
 
@@ -9,7 +10,7 @@ void Parser::ParseGameObjects(std::string source, ObjectList* target){
     TiXmlDocument xml;
     xml.LoadFile(source);
     if(xml.Error()){
-        std::cout << "Failed to load: " << source << " " << xml.ErrorDesc() << std::endl;
+        CORE_ERROR("Failed to load: {0}", source);
         return;
     }
 
@@ -39,6 +40,10 @@ void Parser::ParseGameObjects(std::string source, ObjectList* target){
             e->Attribute("flip", &flip);
             e->Attribute("category", &category);
 
+            #if 1
+                CORE_INFO("x: {0}, y: {1}, w: {2}, h: {3}, flip: {4}, category: {5}, texture: {6}, type:{7}", x, y, width, height, flip, category, texID, objType);
+            #endif
+
             SDL_RendererFlip rflip;
             if(flip == 0){rflip = SDL_FLIP_NONE;}
             if(flip == 1){rflip = SDL_FLIP_HORIZONTAL;}
@@ -51,12 +56,18 @@ void Parser::ParseGameObjects(std::string source, ObjectList* target){
             Transform* tf = new Transform(x, y, width, height, texID, rflip, scX, scY, rot, sratio);
             auto object = ObjectFactory::Instance()->CreateObject(objType, tf);
 
-            if(object)
+            if(object != nullptr){
                 target->push_back(std::move(object));
+                #if 0
+                    CORE_INFO("Object: added");
+                #endif
+            }else{
+                CORE_ERROR("Object: nullptr");
+            }
         }
     }
 
-    std::cout << source << " Parsed!" << std::endl;
+    CORE_INFO("{0} GameObjects Parsed!", source);
 }
 
 bool Parser::ParseTextures(std::string source){
@@ -77,7 +88,7 @@ bool Parser::ParseTextures(std::string source){
         }
     }
 
-    std::cout << source << " Parsed!" << std::endl;
+    CORE_INFO("{0} Textures Parsed!", source);
     return true;
 }
 
@@ -114,8 +125,8 @@ TileMap* Parser::ParseMap(std::string source){
         }
     }
 
-    std::cout << source << " Parsed!" << std::endl;
-
+    CORE_INFO("{0} Map Parsed!", source);
+    
     return gamemap;
 }
 

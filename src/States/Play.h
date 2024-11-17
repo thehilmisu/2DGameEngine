@@ -17,6 +17,8 @@
 #include "../Timer/Timer.h"
 #include "../Inputs/Input.h"
 #include "../Parser/Parser.h"
+#include "../Platforms/StaticObject.h"
+#include "../Platforms/Cloud.h"
 
 
 class Play : public GameState{

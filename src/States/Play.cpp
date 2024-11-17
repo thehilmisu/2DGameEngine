@@ -21,17 +21,11 @@ bool Play::Init(){
     CollisionHandler::GetInstance()->SetCollisionLayer(colLayer);
     Camera::GetInstance()->SetLimit(colLayer->GetWidth(), colLayer->GetHeight());
 
-    //  // update window size
-    //     Engine::GetInstance()->SetWidth(width);
-    //     Engine::GetInstance()->SetHeight(height);
-    //     // update camera View port
-    //     Camera::GetInstance()->SetViewPort({0, 0, width, height});
-    //     Camera::GetInstance()->Translate(Vector2D(0,0));
-
     auto player = ObjectFactory::Instance()->CreateObject("WARRIOR", new Transform(200, 600, 136, 96, "player_idle"));
     Camera::GetInstance()->SetViewPort({0, 0, Engine::GetInstance()->GetWidth(), Engine::GetInstance()->GetHeight()});
-    //CORE_ERROR("Player origin: {0},{1}", std::to_string(player->GetOrigin()->X), std::to_string(player->GetOrigin()->Y));
-    Camera::GetInstance()->Translate(Vector2D(0,0));
+    #if 0
+        CORE_ERROR("Player origin: {0},{1}", std::to_string(player->GetOrigin()->X), std::to_string(player->GetOrigin()->Y));
+    #endif
     Camera::GetInstance()->SetTarget(player->GetOrigin());
     
     m_GameObjects.push_back(std::move(player));
