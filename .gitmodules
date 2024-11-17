@@ -6,3 +6,6 @@
 	path = thirdparty/tinyxml
 	url = https://github.com/vmayoral/tinyxml
 	
+[submodule "thirdparty/imgui"]
+	path = thirdparty/imgui
+	url = https://github.com/ocornut/imgui.git

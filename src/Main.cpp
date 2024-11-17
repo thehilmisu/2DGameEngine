@@ -14,6 +14,8 @@ int main(int argc, char** argv)
         StateManager::GetInstance()->Render();
         StateManager::GetInstance()->Update();        
         Timer::GetInstance()->Tick();
+        Engine::GetInstance()->Render();
+        Engine::GetInstance()->Events();    
     }
 
     Engine::GetInstance()->Clean();

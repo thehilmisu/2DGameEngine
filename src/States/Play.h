@@ -21,6 +21,13 @@
 #include "../Platforms/Cloud.h"
 
 
+// ImGui headers
+#include "imgui.h"
+#include "backends/imgui_impl_sdl2.h"
+#include "backends/imgui_impl_sdlrenderer2.h"
+
+
+
 class Play : public GameState{
 
     public:

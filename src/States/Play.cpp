@@ -38,21 +38,44 @@ bool Play::Init(){
 
 void Play::Render(){
 
+     // Start the ImGui frame
+    ImGui_ImplSDLRenderer2_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+
+    // Example ImGui window
+    ImGui::Begin("Hello, HknGameEngine!");
+    ImGui::Text("GameEngine is a simple 2D game engine built with SDL2 and ImGui.");
+    
+    // static float sliderValue = 0.0f;
+    // ImGui::SliderFloat("Slider", &sliderValue, 0.0f, 1.0f);
+    
+    if (ImGui::Button("Developer Mode")) {
+        m_DevMode = true;
+    }
+    if(ImGui::Button("Play Mode")){
+        m_DevMode = false;
+    }
+
+
+    ImGui::End();
+
+    // Rendering
+    ImGui::Render();
+
+
     SDL_SetRenderDrawColor(m_Ctxt, 45, 80, 82, 255);
     SDL_RenderClear(m_Ctxt);
 
-
-    for(size_t i = 0; i < m_SceneObjects.size(); ++i)
-        m_SceneObjects[i]->Draw();
-
+    for(const auto& scene_obj : m_SceneObjects)
+      scene_obj->Draw();
 
     m_LevelMap->Render();
 
-    // for(const auto& scene_obj : m_SceneObjects)
-    //     scene_obj->Draw();
-
     for(const auto& object : m_GameObjects)
         object->Draw();
+
+    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), Engine::GetInstance()->GetRenderer());
 
     SDL_RenderPresent(m_Ctxt);
 }
@@ -63,7 +86,6 @@ void Play::Update(){
     float dt = Timer::GetInstance()->GetDeltaTime();
     if(!m_DevMode)
     {
-
         for(auto& object : m_GameObjects)
             object->Update(dt);
 
@@ -79,7 +101,6 @@ void Play::Events(){
 
     if(m_DevMode)
     {
-
         if(Input::GetInstance()->GetMouseButtonDown(LEFT)){
             const Vector2D currMousePos = Input::GetInstance()->GetMousePosition();
             const SDL_Point point = {(int)currMousePos.X, (int)currMousePos.Y};
@@ -96,6 +117,9 @@ void Play::Events(){
         //Camera::Instance()->TranslateY(10*Input::Instance()->GetAxisKey(VERTICAL));
     }
 
+    
+
+
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_F5)){
         m_DevMode = false;
         CORE_WARN("DevMode: OFF");
@@ -107,6 +131,11 @@ void Play::Events(){
 }
 
 bool Play::Exit(){
+
+    // Cleanup ImGui
+    ImGui_ImplSDLRenderer2_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
 
     m_LevelMap->Clean();
     delete m_LevelMap;

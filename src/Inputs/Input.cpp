@@ -1,6 +1,7 @@
 #include "Input.h"
 #include "../Core/Engine.h"
 #include "../Camera/Camera.h"
+#include "backends/imgui_impl_sdl2.h"
 
 
 Input* Input::s_Instance = nullptr;
@@ -12,7 +13,9 @@ Input::Input(){
 
 void Input::Listen(){
     SDL_Event event;
+    
     while(SDL_PollEvent(&event)){
+        ImGui_ImplSDL2_ProcessEvent(&event);
         switch(event.type){
             case SDL_WINDOWEVENT: WindowEvent(event); break;
             case SDL_QUIT: Engine::GetInstance()->Quit(); break;
