@@ -23,16 +23,13 @@ class TileLayer {
         m_TileSize(tilesize), m_Width(width), m_Height(rowcount), m_Tilemap(tilemap), m_Tilesets(tilesets){}
 
         void Render(){
-            for(unsigned int i = 0; i < m_Height; i++){
-                for(unsigned int j = 0; j < m_Width; j++){
+            for(int i = 0; i < m_Height; i++){
+                for(int j = 0; j < m_Width; j++){
 
                     int tileID = m_Tilemap[i][j];
-                    int temp = tileID;
-
-                    if(tileID == 0)
+                    if(tileID == 0){
                         continue;
-
-                    else{
+                    }else{
                         int index = 0;
                         if(m_Tilesets.size() > 1){
                             for(unsigned int k = 1; k < m_Tilesets.size(); k++){
@@ -67,9 +64,10 @@ class TileLayer {
         inline TileMatrix GetTileMap(){return m_Tilemap;}
 
     private:
+        int m_TileSize, m_Width, m_Height;
         TileMatrix m_Tilemap;
         TilesetsList m_Tilesets;
-        int m_TileSize, m_Width, m_Height;
+        
 };
 
 #endif // TILELAYER_H

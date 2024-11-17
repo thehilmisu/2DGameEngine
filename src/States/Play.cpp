@@ -3,12 +3,11 @@
 #include "Menu.h"
 #include "Pause.h"
 #include "../States/StateManager.h"
+#include <memory>
 
-
-Play::Play(){}
+Play::Play() : m_DevMode(true) {}
 
 bool Play::Init(){
-    m_DevMode = true;
     m_Ctxt = Engine::GetInstance()->GetRenderer();
 
     Parser::Instance()->ParseTextures("assets/textures.tml");
@@ -42,12 +41,17 @@ void Play::Render(){
     SDL_SetRenderDrawColor(m_Ctxt, 45, 80, 82, 255);
     SDL_RenderClear(m_Ctxt);
 
-    for(auto& scene_obj : m_SceneObjects)
-        scene_obj->Draw();
+
+    for(size_t i = 0; i < m_SceneObjects.size(); ++i)
+        m_SceneObjects[i]->Draw();
+
 
     m_LevelMap->Render();
 
-    for(auto& object : m_GameObjects)
+    // for(const auto& scene_obj : m_SceneObjects)
+    //     scene_obj->Draw();
+
+    for(const auto& object : m_GameObjects)
         object->Draw();
 
     SDL_RenderPresent(m_Ctxt);
@@ -78,7 +82,7 @@ void Play::Events(){
 
         if(Input::GetInstance()->GetMouseButtonDown(LEFT)){
             const Vector2D currMousePos = Input::GetInstance()->GetMousePosition();
-            const SDL_Point point = {currMousePos.X, currMousePos.Y};
+            const SDL_Point point = {(int)currMousePos.X, (int)currMousePos.Y};
             const SDL_Rect viewport = Camera::GetInstance()->GetViewPort();
 
             if(SDL_PointInRect(&point, &viewport)){

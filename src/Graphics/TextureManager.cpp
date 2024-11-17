@@ -45,17 +45,11 @@ bool TextureManager::Add(std::string id, std::string filename){
     return true;
 }
 
-void TextureManager::Draw(Transform* tf){
-    SDL_Rect srcRect = {0, 0, tf->Width, tf->Height};
-    Vector2D cam = Camera::GetInstance()->GetPosition()*tf->ScrollRatio;
-    SDL_Rect dstRect = {tf->X - cam.X, tf->Y - cam.Y, tf->Width*tf->ScaleX, tf->Height*tf->ScaleY};
-    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[tf->TextureID], &srcRect, &dstRect, tf->Rotation, nullptr, tf->Flip);
-}
-
 void TextureManager::DrawFrame(Transform* tf, int row, int frame){
     Vector2D cam = Camera::GetInstance()->GetPosition()*tf->ScrollRatio;
     SDL_Rect srcRect = {tf->Width*frame, tf->Height*row, tf->Width, tf->Height};
-    SDL_Rect dstRect = {tf->X - cam.X, tf->Y - cam.Y, tf->Width*tf->ScaleX, tf->Height*tf->ScaleY};
+    SDL_Rect dstRect = {static_cast<int>(tf->X - cam.X), static_cast<int>(tf->Y - cam.Y), 
+                        static_cast<int>(tf->Width*tf->ScaleX), static_cast<int>(tf->Height*tf->ScaleY)};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[tf->TextureID], &srcRect, &dstRect, tf->Rotation, nullptr, tf->Flip);
 }
 
@@ -64,6 +58,15 @@ void TextureManager::Draw(std::string id, int x, int y, int w, int h, SDL_Render
     Vector2D cam = Camera::GetInstance()->GetPosition() * speedRatio;
     SDL_Rect dstRect = {static_cast<int>(x - cam.X), static_cast<int>(y - cam.Y), static_cast<int>(w * scaleX), static_cast<int>(h * scaleY)};
     SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[id], &srcRect, &dstRect, rotation, nullptr, flip);
+}
+
+void TextureManager::Draw(Transform* tf){
+    SDL_Rect srcRect = {0, 0, tf->Width, tf->Height};
+    Vector2D cam = Camera::GetInstance()->GetPosition()*tf->ScrollRatio;
+    SDL_Rect dstRect = {static_cast<int>(tf->X - cam.X), static_cast<int>(tf->Y - cam.Y), 
+                        static_cast<int>(tf->Width*tf->ScaleX), static_cast<int>(tf->Height*tf->ScaleY)};
+    //CORE_ERROR("tf->X: {0},{1},{2},{3},{4} ", tf->X, tf->Y, tf->TextureID,tf->Width, tf->Height);
+    SDL_RenderCopyEx(Engine::GetInstance()->GetRenderer(), m_TextureMap[tf->TextureID], &srcRect, &dstRect, tf->Rotation, nullptr, tf->Flip);
 }
 
 void TextureManager::DrawFrame(std::string id, int x, int y, int w, int h, int row, int frame, SDL_RendererFlip flip, float scaleX, float scaleY, float rotation, float speedRatio){

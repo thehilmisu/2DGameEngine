@@ -3,12 +3,13 @@
 
 #include "../Physics/Vector2D.h"
 #include "SDL2/SDL.h"
+#include <string>
 
 class Transform {
 
     public:
 
-        Transform(float x=0, float y=0, int width=0, int height=0, const char* textureID = "",
+        Transform(float x=0, float y=0, int width=0, int height=0, std::string textureID = "",
             SDL_RendererFlip flip = SDL_FLIP_NONE, float scaleX = 1.0f, float scaleY = 1.0f,
             float rotation = 0.0f, float scrollRatio = 1.0f){
 
@@ -38,7 +39,7 @@ class Transform {
             int Width, Height;
             float ScaleX, ScaleY;
             SDL_RendererFlip Flip;
-            const char* TextureID;
+            std::string TextureID;
 };
 
 #endif

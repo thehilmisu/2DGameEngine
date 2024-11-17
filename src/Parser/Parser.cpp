@@ -5,7 +5,7 @@
 
 Parser* Parser::s_Instance = nullptr;
 
-void Parser::ParseGameObjects(std::string source, ObjectList* target){
+void Parser::ParseGameObjects(const std::string& source, ObjectList* target){
 
     TiXmlDocument xml;
     xml.LoadFile(source);
@@ -20,12 +20,12 @@ void Parser::ParseGameObjects(std::string source, ObjectList* target){
 
         if(e->Value() == std::string("object")){
 
-            int x, y, width, height, flip = 0;
-            double scX, scY = 0;
-            const char* objType;
-            const char* texID;
-            double sratio = 0;
-            double rot = 0;
+            int x = 0, y = 0, width = 0, height = 0, flip = 0;
+            double scX = 0, scY = 0;
+            std::string objType;
+            std::string texID;
+            double sratio = 0.0;
+            double rot = 0.0;
             int category = -1;
 
             objType = e->Attribute("type");
@@ -40,7 +40,7 @@ void Parser::ParseGameObjects(std::string source, ObjectList* target){
             e->Attribute("flip", &flip);
             e->Attribute("category", &category);
 
-            #if 1
+            #if 0
                 CORE_INFO("x: {0}, y: {1}, w: {2}, h: {3}, flip: {4}, category: {5}, texture: {6}, type:{7}", x, y, width, height, flip, category, texID, objType);
             #endif
 
@@ -53,7 +53,12 @@ void Parser::ParseGameObjects(std::string source, ObjectList* target){
             e->Attribute("sY", &scY);
             e->Attribute("sratio", &sratio);
 
-            Transform* tf = new Transform(x, y, width, height, texID, rflip, scX, scY, rot, sratio);
+            #if 0
+                CORE_INFO("sx: {0}, sy: {1}", scX, scY);
+            #endif
+
+
+            auto tf = new Transform(x, y, width, height, texID, rflip, scX, scY, rot, sratio);
             auto object = ObjectFactory::Instance()->CreateObject(objType, tf);
 
             if(object != nullptr){
@@ -64,6 +69,7 @@ void Parser::ParseGameObjects(std::string source, ObjectList* target){
             }else{
                 CORE_ERROR("Object: nullptr");
             }
+
         }
     }
 

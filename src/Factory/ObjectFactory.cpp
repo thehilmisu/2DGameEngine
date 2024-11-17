@@ -2,17 +2,14 @@
 
 ObjectFactory* ObjectFactory::s_Instance = nullptr;
 
-void ObjectFactory::RegisterType(std::string className, std::function<ObjectPtr(Transform* tf)> type){
-    m_TypeRegistry[className] = type;
+void ObjectFactory::RegisterType(const std::string& className, std::function<ObjectPtr(Transform*)> creator) {
+    m_FactoryMap[className] = creator;
 }
 
-ObjectPtr ObjectFactory::CreateObject(std::string type, Transform* tf){
-
-    ObjectPtr object = nullptr;
-    auto it = m_TypeRegistry.find(type);
-
-    if(it != m_TypeRegistry.end())
-        object = it->second(tf);
-
-    return object;
+ObjectPtr ObjectFactory::CreateObject(const std::string& className, Transform* tf) {
+    auto it = m_FactoryMap.find(className);
+    if (it != m_FactoryMap.end()) {
+        return it->second(tf);
+    }
+    return nullptr;
 }

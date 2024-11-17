@@ -14,7 +14,7 @@ namespace Ui{
     void Button::Refresh(){
 
         Vector2D mousePos = Input::GetInstance()->GetMousePosition();
-        SDL_Point point = {mousePos.X, mousePos.Y};
+        SDL_Point point = {(int)mousePos.X, (int)mousePos.Y};
 
         if(SDL_PointInRect(&point, &m_Container->Rect)){
             //clicked
