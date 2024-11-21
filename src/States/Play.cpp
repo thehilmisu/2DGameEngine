@@ -57,12 +57,10 @@ void Play::Render(){
         m_DevMode = false;
     }
 
-
     ImGui::End();
 
     // Rendering
     ImGui::Render();
-
 
     SDL_SetRenderDrawColor(m_Ctxt, 45, 80, 82, 255);
     SDL_RenderClear(m_Ctxt);
