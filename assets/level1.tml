@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Objects>
+    <object type="SOBJECT" category="0" texture="sky"  x="0" y ="-50" w="0" h="0" flip="0" sX="3" sY="2.5" sratio="0.08" rot="0"/>
+    <object type="CLOUD" category="0" texture="cloud" x="0" y ="20" w="634" h="136" flip="0" sX="3" sY="3" sratio="0.2" rot="0"/>
+    <object type="SOBJECT" category="0" texture="mountain" x="0" y ="220" w="688" h="127" flip="0" sX="3" sY="2.5" sratio="0.1" rot="0"/>
+    <object type="CLOUD" category="0" texture="cloud" x="400" y ="0" w="634" h="136" flip="0" sX="1" sY="1" sratio="0.15" rot="0"/>
+
+    <object type="SOBJECT" category="0" texture="pine1" x="0" y ="250" w="0" h="0" flip="0" sX="4" sY="4" sratio="0.2" rot="0"/>
+    <object type="SOBJECT" category="0" texture="pine2" x="0" y ="350" w="0" h="0" flip="0" sX="4" sY="4" sratio="0.4" rot="0"/>    
+
+    <object type="SOBJECT" category="0" texture="tree" x="0" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="0.3" rot="0"/>    
+    <object type="SOBJECT" category="0" texture="tree_dead" x="100" y="336" w="80" h="112" flip="2" sX="3" sY="4" sratio="0.5" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="400" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="600" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree_dead" x="800" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="1000" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="1200" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="1400" y="336" w="80" h="112" flip="0" sX="3.5" sY="4.5" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree_dead" x="1600" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="1800" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree_dead" x="2000" y="336" w="80" h="112" flip="0" sX="3.5" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="2200" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="2400" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree_dead" x="2600" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="2800" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/>
+
+    <object type="SOBJECT" category="0" texture="tree_dead" x="100" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="500" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree_dead" x="900" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="1000" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/>
+    <object type="SOBJECT" category="0" texture="tree_dead" x="-100" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="700" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="900" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/> 
+    <object type="SOBJECT" category="0" texture="tree" x="1200" y="336" w="80" h="112" flip="0" sX="3" sY="4" sratio="1" rot="0"/>
+
+    <object type="SOBJECT" category="0" texture="Sign_2" x="10" y="700" w="63" h="65" flip="0" sX="1" sY="1" sratio="1" rot="0"/>
+    <object type="SOBJECT" category="0" texture="Sign_1" x="800" y="700" w="63" h="65" flip="0" sX="1" sY="1" sratio="1" rot="0"/>
+</Objects>

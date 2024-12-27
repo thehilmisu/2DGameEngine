@@ -1,0 +1,8 @@
+[submodule "thirdparty/spdlog"]
+	path = thirdparty/spdlog
+	url = https://github.com/gabime/spdlog
+
+[submodule "thirdparty/tinyxml"]
+	path = thirdparty/tinyxml
+	url = https://github.com/vmayoral/tinyxml
+	
