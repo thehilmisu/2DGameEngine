@@ -4,6 +4,7 @@
 #include "../States/Play.h"
 #include "../States/StateManager.h"
 #include "Log.h"
+#include "SDL_events.h"
 #include "assert.h"
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
