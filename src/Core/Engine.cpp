@@ -5,6 +5,7 @@
 #include "../States/StateManager.h"
 #include "Log.h"
 #include "SDL_events.h"
+#include "SDL_render.h"
 #include "assert.h"
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
@@ -38,8 +39,6 @@ bool Engine::Init() {
   // Initialize ImGui
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
-  ImGuiIO &io = ImGui::GetIO();
-  (void)io;
   ImGui::StyleColorsDark();
 
   // Setup Platform/Renderer backends
@@ -47,7 +46,9 @@ bool Engine::Init() {
   ImGui_ImplSDLRenderer2_Init(m_Renderer);
 
   StateManager::GetInstance()->ChangeState(new Menu());
+  
   m_IsRunning = true;
+  
   return true;
 }
 
@@ -59,7 +60,27 @@ void Engine::Update() {
   // empty
 }
 
-void Engine::Events() {}
+void Engine::Events(SDL_Event* event) {
+ 
+    ImGui_ImplSDL2_ProcessEvent(event);
+    
+    if (event->window.event == SDL_WINDOWEVENT_RESIZED) {
+        
+        int width = event->window.data1;
+        int height = event->window.data2;
+        
+        SetWidth(width);
+        SetHeight(height);
+        
+        ImGuiIO& io = ImGui::GetIO();
+        io.DisplaySize = ImVec2((float)width, (float)height);
+        CORE_WARN("Width : {0}, Height: {1}", width, height);
+
+        SDL_RenderSetLogicalSize(m_Renderer, width, height);
+        // ImGui_ImplSDLRenderer2_InvalidateDeviceObjects();
+        ImGui_ImplSDLRenderer2_CreateDeviceObjects();
+    }
+}
 
 bool Engine::Clean() {
 

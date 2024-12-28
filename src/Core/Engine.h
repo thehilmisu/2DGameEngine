@@ -8,6 +8,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL_events.h"
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
@@ -21,7 +22,7 @@ public:
 
   void Update();
   void Render();
-  void Events();
+  void Events(SDL_Event* event);
 
   inline bool IsRunning() { return m_IsRunning; }
 

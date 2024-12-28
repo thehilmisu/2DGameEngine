@@ -19,8 +19,8 @@ bool Menu::Init() {
 void Menu::RenderTopBar() {
 
   ImGui::SetNextWindowPos(ImVec2(200, 0));
-  ImGui::SetNextWindowSize(ImVec2(-1, 50));
-  ImGui::BeginChild("Topbar", ImVec2(-1, 50), true);
+  ImGui::SetNextWindowSize(ImVec2(Engine::GetInstance()->GetWidth() - 200, 50));
+  ImGui::BeginChild("Topbar", ImVec2(Engine::GetInstance()->GetWidth() - 200, 50), true);
   ImGui::Text("Top Bar");
 
   if (ImGui::Button("Play Mode", ImVec2(100, 20))) {
@@ -41,8 +41,8 @@ void Menu::RenderTopBar() {
 
 void Menu::RenderSideBar() {
   ImGui::SetNextWindowPos(ImVec2(0, 0));
-  ImGui::SetNextWindowSize(ImVec2(200, -1));
-  ImGui::BeginChild("Sidebar", ImVec2(200, 0), true);
+  ImGui::SetNextWindowSize(ImVec2(200, Engine::GetInstance()->GetHeight()));
+  ImGui::BeginChild("Sidebar", ImVec2(200, Engine::GetInstance()->GetHeight()), true);
   ImGui::Text("Sidebar");
 
   // setting x or y as -1 means, it will fill the space
@@ -60,6 +60,8 @@ void Menu::RenderSideBar() {
 }
 void Menu::Render() {
 
+  ImGuiIO& io = ImGui::GetIO();
+  io.DisplaySize = ImVec2(Engine::GetInstance()->GetWidth(), Engine::GetInstance()->GetHeight());
   // Start the ImGui frame
   ImGui_ImplSDLRenderer2_NewFrame();
   ImGui_ImplSDL2_NewFrame();
@@ -67,8 +69,8 @@ void Menu::Render() {
 
   // ImGui Menu window
   ImGui::Begin("HknGameEngine!", nullptr,
-               ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
-                   ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+                ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize |
+                ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
   RenderSideBar();
   RenderTopBar();
@@ -84,7 +86,7 @@ void Menu::Render() {
 
   // The area between the side bar and top bar
   SDL_SetRenderDrawColor(m_Ctxt, 70, 45, 16, 255);
-  SDL_Rect emptyArea = {200, 50, SCREEN_WIDTH - 200, SCREEN_HEIGHT - 50};
+  SDL_Rect emptyArea = {200, 50, Engine::GetInstance()->GetWidth() - 200, Engine::GetInstance()->GetHeight() - 50};
   SDL_RenderFillRect(m_Ctxt, &emptyArea);
 
   SDL_RenderPresent(m_Ctxt);

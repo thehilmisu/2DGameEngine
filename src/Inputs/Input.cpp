@@ -1,7 +1,7 @@
 #include "Input.h"
 #include "../Camera/Camera.h"
 #include "../Core/Engine.h"
-#include "imgui_impl_sdl2.h"
+#include "SDL_events.h"
 
 Input *Input::s_Instance = nullptr;
 
@@ -13,8 +13,7 @@ Input::Input() {
 void Input::Listen() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
-
-    ImGui_ImplSDL2_ProcessEvent(&event);
+    Engine::GetInstance()->Events(&event);
     switch (event.type) {
     case SDL_WINDOWEVENT:
       WindowEvent(event);
@@ -77,9 +76,6 @@ void Input::WindowEvent(SDL_Event event) {
   if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
     int width = event.window.data1;
     int height = event.window.data2;
-    // update window size
-    Engine::GetInstance()->SetWidth(width);
-    Engine::GetInstance()->SetHeight(height);
     // update camera View port
     Camera::GetInstance()->SetViewPort({0, 0, width, height});
     Camera::GetInstance()->Translate(Vector2D(0, 0));
