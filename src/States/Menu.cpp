@@ -16,16 +16,41 @@ bool Menu::Init() {
   return true;
 }
 
+void Menu::RenderBottomBar() {
+
+    ImGui::SetNextWindowPos(ImVec2(200, Engine::GetInstance()->GetHeight() - 250));
+    ImGui::SetNextWindowSize(ImVec2(Engine::GetInstance()->GetWidth() - 200, 50));
+    ImGui::BeginChild("Bottombar", ImVec2(Engine::GetInstance()->GetWidth() - 200, 50), true);
+
+    if (ImGui::Button("Play Mode", ImVec2(100, 20))) {
+        CORE_INFO("Play Mode Button");
+        std::cout << "Play" << std::endl;
+    }
+    
+    ImGui::SameLine();
+    
+    if (ImGui::Button("Settings", ImVec2(100, 20))) {
+        CORE_INFO("Settings Button");
+    }
+    
+    ImGui::SameLine();
+   
+    if (ImGui::Button("Another Button", ImVec2(100, 20))) {
+        CORE_INFO("Another Button");
+    }
+
+    ImGui::EndChild();
+
+}
+
 void Menu::RenderTopBar() {
 
   ImGui::SetNextWindowPos(ImVec2(200, 0));
   ImGui::SetNextWindowSize(ImVec2(Engine::GetInstance()->GetWidth() - 200, 50));
   ImGui::BeginChild("Topbar", ImVec2(Engine::GetInstance()->GetWidth() - 200, 50), true);
-  ImGui::Text("Top Bar");
 
   if (ImGui::Button("Play Mode", ImVec2(100, 20))) {
-    CORE_INFO("Play Mode Button");
-    std::cout << "Play" << std::endl;
+    StartGame();
   }
   ImGui::SameLine();
   if (ImGui::Button("Settings", ImVec2(100, 20))) {
@@ -43,7 +68,6 @@ void Menu::RenderSideBar() {
   ImGui::SetNextWindowPos(ImVec2(0, 0));
   ImGui::SetNextWindowSize(ImVec2(200, Engine::GetInstance()->GetHeight()));
   ImGui::BeginChild("Sidebar", ImVec2(200, Engine::GetInstance()->GetHeight()), true);
-  ImGui::Text("Sidebar");
 
   // setting x or y as -1 means, it will fill the space
   if (ImGui::Button("Play Mode", ImVec2(-1, 0))) {
@@ -74,6 +98,7 @@ void Menu::Render() {
 
   RenderSideBar();
   RenderTopBar();
+  RenderBottomBar();
 
   ImGui::End();
   ImGui::Render();
@@ -86,7 +111,7 @@ void Menu::Render() {
 
   // The area between the side bar and top bar
   SDL_SetRenderDrawColor(m_Ctxt, 70, 45, 16, 255);
-  SDL_Rect emptyArea = {200, 50, Engine::GetInstance()->GetWidth() - 200, Engine::GetInstance()->GetHeight() - 50};
+  SDL_Rect emptyArea = {200, 50, Engine::GetInstance()->GetWidth() - 200, Engine::GetInstance()->GetHeight() - 300};
   SDL_RenderFillRect(m_Ctxt, &emptyArea);
 
   SDL_RenderPresent(m_Ctxt);

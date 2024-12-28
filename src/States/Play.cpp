@@ -104,6 +104,10 @@ void Play::Events(){
         m_DevMode = true;
         CORE_WARN("DevMode: ON");
     }
+    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_E)){
+        OpenMenu();
+    }
+
 }
 
 bool Play::Exit(){
