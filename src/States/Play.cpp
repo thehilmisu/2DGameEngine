@@ -63,7 +63,6 @@ void Play::Update(){
     float dt = Timer::GetInstance()->GetDeltaTime();
     if(!m_DevMode)
     {
-
         for(auto& object : m_GameObjects)
             object->Update(dt);
 
@@ -105,6 +104,7 @@ void Play::Events(){
         CORE_WARN("DevMode: ON");
     }
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_E)){
+        m_DevMode = true;
         OpenMenu();
     }
 

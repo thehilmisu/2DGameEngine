@@ -19,49 +19,62 @@ bool Menu::Init() {
 void Menu::RenderBottomBar() {
 
     ImGui::SetNextWindowPos(ImVec2(200, Engine::GetInstance()->GetHeight() - 250));
-    ImGui::SetNextWindowSize(ImVec2(Engine::GetInstance()->GetWidth() - 200, 50));
-    ImGui::BeginChild("Bottombar", ImVec2(Engine::GetInstance()->GetWidth() - 200, 50), true);
+    ImGui::SetNextWindowSize(ImVec2(Engine::GetInstance()->GetWidth() - 200, 250));
+    ImGui::BeginChild("Bottombar", ImVec2(Engine::GetInstance()->GetWidth() - 200, 250), true);
 
-    if (ImGui::Button("Play Mode", ImVec2(100, 20))) {
-        CORE_INFO("Play Mode Button");
-        std::cout << "Play" << std::endl;
-    }
-    
-    ImGui::SameLine();
-    
-    if (ImGui::Button("Settings", ImVec2(100, 20))) {
-        CORE_INFO("Settings Button");
-    }
-    
-    ImGui::SameLine();
-   
-    if (ImGui::Button("Another Button", ImVec2(100, 20))) {
-        CORE_INFO("Another Button");
-    }
+    if(ImGui::BeginTable("BottomLogTable", 3)){
 
+        ImGui::TableSetupColumn("Time stamp", ImGuiTableColumnFlags_WidthFixed, 200.0f);
+        ImGui::TableSetupColumn("Provider", ImGuiTableColumnFlags_WidthFixed, 200.0f);
+        ImGui::TableSetupColumn("Log", ImGuiTableColumnFlags_WidthFixed, Engine::GetInstance()->GetWidth() - 600.0f);
+        ImGui::TableHeadersRow();
+
+        //add elements to table
+        for(int row = 0; row < 10; row++){
+            ImGui::TableNextRow();
+            for(int col = 0; col < 3; col++){
+                ImGui::TableSetColumnIndex(col);
+                ImGui::Text("Row %d, Col %d", row, col);
+            }
+        }
+
+        ImGui::EndTable();
+    }
     ImGui::EndChild();
-
 }
 
 void Menu::RenderTopBar() {
 
-  ImGui::SetNextWindowPos(ImVec2(200, 0));
-  ImGui::SetNextWindowSize(ImVec2(Engine::GetInstance()->GetWidth() - 200, 50));
-  ImGui::BeginChild("Topbar", ImVec2(Engine::GetInstance()->GetWidth() - 200, 50), true);
+    float btn_w = 100.0f;
+    float btn_h = 20.0f;
+    float w = Engine::GetInstance()->GetWidth() - 200;
+    float h = 50.0f;
+    float total_btn_w = (btn_w * 3);
+    float spacing = 10.0f;
+    float offset = (w - total_btn_w) / 2.0f;
+    
+    ImGui::SetNextWindowPos(ImVec2(200, 0));
+    ImGui::SetNextWindowSize(ImVec2(w, h));
+    ImGui::BeginChild("Topbar", ImVec2(w,h), true);
 
-  if (ImGui::Button("Play Mode", ImVec2(100, 20))) {
-    StartGame();
-  }
-  ImGui::SameLine();
-  if (ImGui::Button("Settings", ImVec2(100, 20))) {
-    CORE_INFO("Settings Button");
-  }
-  ImGui::SameLine();
-  if (ImGui::Button("Another Button", ImVec2(100, 20))) {
-    CORE_INFO("Another Button");
-  }
+    ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + offset, 15.0f));
+    if (ImGui::Button("Play", ImVec2(btn_w, btn_h))) {
+        StartGame();
+    }
+    
+    ImGui::SameLine();
+    ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + spacing, 15.0f));
+    if (ImGui::Button("Pause", ImVec2(btn_w, btn_h))) {
+        CORE_INFO("Settings Button");
+    }
+    
+    ImGui::SameLine();
+    ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + spacing, 15.0f));
+    if (ImGui::Button("Stop", ImVec2(btn_w, btn_h))) {
+        CORE_INFO("Another Button");
+    }
 
-  ImGui::EndChild();
+    ImGui::EndChild();
 }
 
 void Menu::RenderSideBar() {
