@@ -1,9 +1,6 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <iostream>
-#include <vector>
-
 #include "../States/GameState.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"

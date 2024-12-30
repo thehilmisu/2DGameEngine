@@ -1,6 +1,5 @@
 #include "Engine.h"
 #include "../Inputs/Input.h"
-#include "../States/Menu.h"
 #include "../States/Play.h"
 #include "../States/StateManager.h"
 #include "Log.h"
