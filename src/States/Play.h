@@ -4,6 +4,8 @@
 #include "GameState.h"
 
 #include "../Map/TileMap.h"
+#include "Editor.h"
+#include <memory>
 #include "../Object/GameObject.h"
 #include "SDL2/SDL.h"
 #include "../Core/Engine.h"
@@ -37,6 +39,8 @@ class Play : public GameState{
 
     private:
         bool m_DevMode;
+        bool m_EditorMode;
+        std::unique_ptr<Editor> editor;
         TileMap* m_LevelMap;
         ObjectList m_GameObjects;
         ObjectList m_SceneObjects;

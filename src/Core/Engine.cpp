@@ -45,7 +45,7 @@ bool Engine::Init() {
   ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
   ImGui_ImplSDLRenderer2_Init(m_Renderer);
 
-  StateManager::GetInstance()->ChangeState(new Menu());
+  StateManager::GetInstance()->ChangeState(new Play());
   
   m_IsRunning = true;
   

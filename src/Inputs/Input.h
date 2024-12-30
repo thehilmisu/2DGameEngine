@@ -4,6 +4,7 @@
 #include "SDL2/SDL.h"
 #include "../Physics/Vector2D.h"
 #include <vector>
+
 enum Axis {HORIZONTAL, VERTICAL};
 enum MouseButtons{LEFT, MIDDLE, RIGHT};
 

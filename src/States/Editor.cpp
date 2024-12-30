@@ -1,4 +1,4 @@
-#include "Menu.h"
+#include "Editor.h"
 #include "../Core/Log.h"
 #include "../Inputs/Input.h"
 #include "Play.h"
@@ -8,19 +8,21 @@
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_sdlrenderer2.h"
 
-Menu::Menu() {}
+Editor::Editor() {}
 
-bool Menu::Init() {
-  m_Ctxt = Engine::GetInstance()->GetRenderer();
-  CORE_INFO("Menu initialized");
+bool Editor::Init() {
+  CORE_INFO("Editor initialized");
   return true;
 }
 
-void Menu::RenderBottomBar() {
+void Editor::RenderBottomBar() {
 
     ImGui::SetNextWindowPos(ImVec2(200, Engine::GetInstance()->GetHeight() - 250));
     ImGui::SetNextWindowSize(ImVec2(Engine::GetInstance()->GetWidth() - 200, 250));
-    ImGui::BeginChild("Bottombar", ImVec2(Engine::GetInstance()->GetWidth() - 200, 250), true);
+    ImGui::Begin("Bottombar", nullptr,
+            ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize |
+            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+
 
     if(ImGui::BeginTable("BottomLogTable", 3)){
 
@@ -40,10 +42,10 @@ void Menu::RenderBottomBar() {
 
         ImGui::EndTable();
     }
-    ImGui::EndChild();
+    ImGui::End();
 }
 
-void Menu::RenderTopBar() {
+void Editor::RenderTopBar() {
 
     float btn_w = 100.0f;
     float btn_h = 20.0f;
@@ -55,11 +57,14 @@ void Menu::RenderTopBar() {
     
     ImGui::SetNextWindowPos(ImVec2(200, 0));
     ImGui::SetNextWindowSize(ImVec2(w, h));
-    ImGui::BeginChild("Topbar", ImVec2(w,h), true);
+    ImGui::Begin("Topbar", nullptr,
+            ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize |
+            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+
 
     ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPosX() + offset, 15.0f));
     if (ImGui::Button("Play", ImVec2(btn_w, btn_h))) {
-        StartGame();
+        // StartGame();
     }
     
     ImGui::SameLine();
@@ -74,28 +79,32 @@ void Menu::RenderTopBar() {
         CORE_INFO("Another Button");
     }
 
-    ImGui::EndChild();
+    ImGui::End();
 }
 
-void Menu::RenderSideBar() {
-  ImGui::SetNextWindowPos(ImVec2(0, 0));
-  ImGui::SetNextWindowSize(ImVec2(200, Engine::GetInstance()->GetHeight()));
-  ImGui::BeginChild("Sidebar", ImVec2(200, Engine::GetInstance()->GetHeight()), true);
+void Editor::RenderSideBar() {
+  
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::SetNextWindowSize(ImVec2(200, Engine::GetInstance()->GetHeight()));
+    ImGui::Begin("Sidebar", nullptr,
+            ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize |
+            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
-  // setting x or y as -1 means, it will fill the space
-  if (ImGui::Button("Play Mode", ImVec2(-1, 0))) {
-    CORE_INFO("Play Mode Button");
-  }
-  if (ImGui::Button("Settings", ImVec2(-1, 0))) {
-    CORE_INFO("Settings Button");
-  }
-  if (ImGui::Button("Another Button", ImVec2(-1, 0))) {
-    CORE_INFO("Another Button");
-  }
 
-  ImGui::EndChild();
+    // setting x or y as -1 means, it will fill the space
+    if (ImGui::Button("Play Mode", ImVec2(-1, 0))) {
+        CORE_INFO("Play Mode Button");
+    }
+    if (ImGui::Button("Settings", ImVec2(-1, 0))) {
+        CORE_INFO("Settings Button");
+    }
+    if (ImGui::Button("Another Button", ImVec2(-1, 0))) {
+        CORE_INFO("Another Button");
+    }
+
+    ImGui::End();
 }
-void Menu::Render() {
+void Editor::Render() {
 
   ImGuiIO& io = ImGui::GetIO();
   io.DisplaySize = ImVec2(Engine::GetInstance()->GetWidth(), Engine::GetInstance()->GetHeight());
@@ -104,46 +113,12 @@ void Menu::Render() {
   ImGui_ImplSDL2_NewFrame();
   ImGui::NewFrame();
 
-  // ImGui Menu window
-  ImGui::Begin("HknGameEngine!", nullptr,
-                ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize |
-                ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
   RenderSideBar();
   RenderTopBar();
   RenderBottomBar();
 
-  ImGui::End();
   ImGui::Render();
-
-  SDL_SetRenderDrawColor(m_Ctxt, 16, 45, 70, 255);
-  SDL_RenderClear(m_Ctxt);
-
   ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(),
                                         Engine::GetInstance()->GetRenderer());
-
-  // The area between the side bar and top bar
-  SDL_SetRenderDrawColor(m_Ctxt, 70, 45, 16, 255);
-  SDL_Rect emptyArea = {200, 50, Engine::GetInstance()->GetWidth() - 200, Engine::GetInstance()->GetHeight() - 300};
-  SDL_RenderFillRect(m_Ctxt, &emptyArea);
-
-  SDL_RenderPresent(m_Ctxt);
 }
-
-void Menu::Update() {
-  // frame1->Update();
-}
-
-bool Menu::Exit() {
-  CORE_INFO("Menu exited");
-  return true;
-}
-
-// change between states
-void Menu::StartGame() { StateManager::GetInstance()->ChangeState(new Play()); }
-
-void Menu::Editor() { std::cout << "editor mode\n"; }
-
-void Menu::Settings() { std::cout << "options mode\n"; }
-
-void Menu::Quit() { std::cout << "quit game\n"; }

@@ -1,11 +1,10 @@
 #include "Play.h"
 #include "../Core/Log.h"
-#include "Menu.h"
 #include "Pause.h"
 #include "../States/StateManager.h"
 #include <memory>
 
-Play::Play() : m_DevMode(true) {}
+Play::Play() : m_DevMode(true), m_EditorMode(false) {}
 
 bool Play::Init(){
     m_Ctxt = Engine::GetInstance()->GetRenderer();
@@ -33,6 +32,9 @@ bool Play::Init(){
 
     CORE_INFO("Play initialized");
 
+    editor = std::make_unique<Editor>();
+    editor->Init();
+
     return true;
 }
 
@@ -47,12 +49,14 @@ void Play::Render(){
 
 
     m_LevelMap->Render();
-
     // for(const auto& scene_obj : m_SceneObjects)
     //     scene_obj->Draw();
 
     for(const auto& object : m_GameObjects)
         object->Draw();
+
+    if(m_EditorMode)
+        editor->Render(); 
 
     SDL_RenderPresent(m_Ctxt);
 }
@@ -105,7 +109,10 @@ void Play::Events(){
     }
     if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_E)){
         m_DevMode = true;
-        OpenMenu();
+        m_EditorMode = true;
+    }
+    if(Input::GetInstance()->GetKeyDown(SDL_SCANCODE_R)){
+        m_EditorMode = false;
     }
 
 }
@@ -133,7 +140,7 @@ bool Play::Exit(){
 }
 
 void Play::OpenMenu(){
-    StateManager::GetInstance()->ChangeState(new Menu());
+    // StateManager::GetInstance()->ChangeState(new Menu());
     CORE_INFO("Menu");
 }
 
